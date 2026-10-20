@@ -1,0 +1,52 @@
+{
+  "recorded_at_utc": "2026-10-18T12:21:03.205325+00:00",
+  "status": "Exploratory retrospective study; all available historical periods have been inspected in earlier research. No untouched-test or prospective claim.",
+  "model": "Normalized finite fractional-integral weights on squared standardized return innovations; implicit graph diffusion; positive intercept and feedback below one.",
+  "memory_length": 252,
+  "fractional_orders": [
+    0.2,
+    0.4,
+    0.6,
+    0.8
+  ],
+  "feedback": [
+    0.8,
+    0.95,
+    0.99
+  ],
+  "diffusion": [
+    0,
+    0.25,
+    1,
+    4
+  ],
+  "ewma_decays": [
+    0.9,
+    0.94,
+    0.97,
+    0.99
+  ],
+  "horizons": [
+    1,
+    5,
+    21
+  ],
+  "estimation_window": 1008,
+  "validation_length": 252,
+  "refit_min_spacing": 21,
+  "origin_step": 5,
+  "first_origin_position": 252,
+  "report_start": "2023-01-01",
+  "parameter_selection": "Pooled normalized one-step QLIKE on trailing validation; scale/correlation fitted strictly before validation, then refit on observed history. No outer-target selection.",
+  "benchmarks": [
+    "historical",
+    "tuned EWMA",
+    "Gaussian QMLE GARCH(1,1)",
+    "fractional without diffusion",
+    "exponential memory with diffusion"
+  ],
+  "primary_score": "Normalized QLIKE against summed squared returns centered at the common origin-fitted mean; compare all methods on identical origins.",
+  "inference": "Paired circular block bootstrap 2000 replicates, blocks 5 and 10 origins, entire asset panel resampled together; nominal intervals, no family-wise significance claim.",
+  "mean_scope": "Risk/variance forecasts; no claim of directional price-prediction improvement.",
+  "legacy_core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f"
+}

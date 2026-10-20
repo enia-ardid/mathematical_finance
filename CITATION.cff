@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this code or research draft, please cite this project and identify the Git commit used."
+type: software
+title: "ETF simulation with temporal memory"
+authors:
+  - family-names: Ardid
+    given-names: Enia
+  - family-names: "Casado de Amezúa"
+    given-names: Pablo
+repository-code: "https://github.com/enia-ardid/mathematical_finance"

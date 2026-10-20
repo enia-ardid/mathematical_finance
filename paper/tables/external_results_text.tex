@@ -1,0 +1,35 @@
+The international panel contains 2,210 prices per asset. Evaluation has
+186 origins from 6 January 2023 to 16 September 2026, with complete targets
+through 15 October 2026 and 38 parameter refits. Its five-observation grid
+has a different calendar phase from the US grid; comparisons are paired
+within panels. All 760 FIGARCH asset fits across the three panels converge,
+as do all 304 international GARCH and 304 GJR-GARCH fits.
+
+The unchanged fractional model obtains international QLIKE
+$(0.52898,0.66359,0.67147)$ at horizons $(1,5,21)$, below both EWMA and FIGARCH
+at every horizon. However, GARCH and GJR-GARCH are stronger at all three.
+The no-graph ablation has lower loss throughout, while the exponential kernel
+is better at horizons 5 and 21. Thus the second universe does not support a
+general benefit from diffusion or a uniform fractional-kernel advantage.
+
+The fixed ensemble lowers those fractional scores to
+$(0.51307,0.65094,0.66134)$, improving all three external pooled comparisons.
+Its asset-level loss is lower in 22 of 24 country--horizon comparisons, but
+annual pooled loss worsens relative to the standalone fractional model at
+horizons 5 and 21 in 2024. Across the US and international panels, the ensemble
+improves on both the standalone fractional model and FIGARCH in all nine
+panel--horizon comparisons. These are loss differences, not percentages of an
+arbitrarily normalized score.
+
+Relative to GJR-GARCH, the ensemble wins only for US sectors at 5 and 21
+observations and for the international panel at 21 observations. The
+international 21-session difference is $-0.00092$, with ten-origin-block
+nominal 95\% range $[-0.01174,0.01110]$. All nine ensemble-versus-GJR ranges
+include zero. For international one-session forecasts, the change from the
+standalone fractional model is $-0.01590$; the interval is
+$[-0.03100,-0.00219]$.
+
+Compared with FIGARCH, the difference is $-0.03073$. Its interval runs from
+$-0.05536$ to $-0.01145$. These descriptive intervals support reporting the
+observed improvement without claiming reliable superiority over GJR-GARCH.
+Full annual, asset-level and paired comparisons remain in the public outputs.

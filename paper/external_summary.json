@@ -1,0 +1,218 @@
+{
+  "generated_at_utc": "2026-10-19T07:06:40.934382+00:00",
+  "protocol": {
+    "recorded_at_utc": "2026-10-18T19:51:50.144093+00:00",
+    "status": "Locally timestamped specification recorded before downloading or inspecting the external price panel. Not an independently registered preregistration, prospective experiment, or statistically independent sample.",
+    "external_tickers": [
+      "EWA",
+      "EWC",
+      "EWG",
+      "EWH",
+      "EWJ",
+      "EWL",
+      "EWQ",
+      "EWU"
+    ],
+    "external_universe": "Eight US-listed iShares country equity ETFs: Australia, Canada, Germany, Hong Kong, Japan, Switzerland, France and United Kingdom. Fixed geographical spread among long-established developed-market funds; no outcome-based additions or removals.",
+    "universe_source": "https://www.ishares.com/us/literature/brochure/ishares-product-list-en-us.pdf",
+    "start_inclusive": "2018-01-01",
+    "end_exclusive": "2026-10-17",
+    "report_start": "2023-01-01",
+    "alignment": "All requested assets required; finite positive adjusted closes on the supplied trading-date panel; no imputation, ticker replacement or post-result universe changes.",
+    "fractional_model": "Unchanged refined_fractional.py rolling_refinement, including all earlier benchmarks and ablations; original grids, windows and horizon-aware selection.",
+    "additional_forecaster": "Exactly 0.5 times persistent_asymmetric variance plus 0.5 times gjr_garch variance at every origin/asset/horizon. No learned or retrospectively selected weights. Optional forecast ensemble, not a new fractional variance recurrence.",
+    "figarch": "arch 7.2.0 ZeroMean, Normal, FIGARCH(1,d,1), power 2, truncation 1000; standardized centered returns using the common origin-fitted mean and scale. Fit on preceding 1008 returns at original refits; default initial estimates, SLSQP maxiter1000 ftol1e-9. Preserve fitting backcast while updating with observed residuals between refits. Report finite nonconverged fits; abort nonfinite results; no substitution.",
+    "evaluation": "Same complete 1/5/21-session targets, every 5 observed sessions on grid starting at price position252; from 2023-01-01; minimum21 sessions between refits. Refit at25-session intervals on this grid. Primary normalized QLIKE, secondary normalized squared error. Annual and per-asset summaries retained.",
+    "comparison": "Standalone fractional and fixed ensemble against all references; paired circular block bootstrap 2000 replicates, seed1729, blocks5/10 origins, whole asset vectors resampled together. Nominal intervals, no multiplicity-adjusted significance claims.",
+    "development_analysis": "Append the same fixed ensemble and FIGARCH to the recorded US index/sector forecasts. These remain exploratory reused-history results, reported separately from external-universe replication.",
+    "stopping_rule": "One external evaluation of this fixed specification; report all results regardless of sign. No retuning from external losses. Any subsequently necessary bug fix must be disclosed separately; never silently rewrite this record.",
+    "limitations": "Country ETFs share trading hours, currency and global shocks with US assets. Historical prices are retrospectively adjusted, not point-in-time. Universe selection is deliberate, not random. External results are not a prospective trading test.",
+    "code_sha256": {
+      "external_validation.py": "a82892984f67e38a9945260b75c363e45a979efe52031684fc8bcdd8ab5df810",
+      "download_external.py": "a9d9fe63dae81d8714eabbd861586312dee5be3135bb36be1e867e154d95b34b",
+      "run_external.py": "52dbaad6f01d2653a31a57ed4ccaf1bb004292f4196d3002ac725de393c39c56",
+      "refined_fractional.py": "b739311b3dc446b6c188749837e290bf519438330a4ed2f2d225e8733d392c6d",
+      "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+      "run_refinement.py": "dabcc786687a6f99d9aef7cf5b4547959a07e8872bf97229b81c851c467f9c3e",
+      "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859",
+      "temporal_memory.py": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+      "requirements.txt": "a07477244c0196ddecbd4906d2191ced295f3c14914e7c12feb377fc5ed4b248"
+    },
+    "prior_protocol_sha256": "4fde749c41a7d283cd9a70e16185ef1107f468b925584e9d207f8bd0e8a2f5ee"
+  },
+  "amendment": {
+    "recorded_at_utc": "2026-10-19T07:00:36.145321+00:00",
+    "original_protocol_sha256": "1124ac7237b91596162a85b33ceba2b91b19bebd9384253b63c7a0806caec9cc",
+    "reason": "The first run completed unchanged fractional forecasts but failed at the first FIGARCH forecast because arch 7.2.0 requires C-contiguous residual arrays. A panel column is a strided array. No FIGARCH comparison results were produced or inspected before this correction.",
+    "changes": "Copy fit and forecast residuals to C-contiguous float arrays; make the runner validate and record this amendment. Add a regression test using strided panel columns. No model, parameter grid, benchmark, universe, score or evaluation dates change.",
+    "corrected_code_sha256": {
+      "external_validation.py": "6ff57a09b7f5805baad0f710c268848521b026e573d1c819394a301e1111d579",
+      "run_external.py": "238d49c4a2f1bab18fdfd0f1257a969d6852304c7149540619916f4cc4bba999"
+    },
+    "unchanged_core_forecasts_before_correction_sha256": "11c97292f843ad81193870c8870cc6b0ba012a7570aa66df314d3679aacdad49",
+    "validation": "Four focused tests pass after the correction, including library forecast equivalence on strided panel inputs. The earlier complete suite passed 53 tests before this correction."
+  },
+  "external_source": {
+    "provider": "Yahoo Finance via yfinance",
+    "yfinance": "0.2.66",
+    "downloaded_at_utc": "2026-10-18T19:52:00.838738+00:00",
+    "auto_adjust": true,
+    "tickers": [
+      "EWA",
+      "EWC",
+      "EWG",
+      "EWH",
+      "EWJ",
+      "EWL",
+      "EWQ",
+      "EWU"
+    ],
+    "start_inclusive": "2018-01-01",
+    "end_exclusive": "2026-10-17",
+    "rows": 2210,
+    "first_price": "2018-01-02",
+    "last_price": "2026-10-16",
+    "sha256": {
+      "prices.csv": "eb0262113b33dc8b4b00184a3a98253c520da5cb5b3c0350789425a0253fbcad"
+    },
+    "protocol_sha256": "1124ac7237b91596162a85b33ceba2b91b19bebd9384253b63c7a0806caec9cc"
+  },
+  "us_source": {
+    "generated_at_utc": "2026-10-18T18:06:03.389216+00:00",
+    "source": {
+      "provider": "Yahoo Finance via yfinance",
+      "yfinance": "0.2.66",
+      "downloaded_at_utc": "2026-10-17T13:10:25.127708+00:00",
+      "start_inclusive": "2018-01-01",
+      "end_exclusive": "2026-10-17",
+      "auto_adjust": true,
+      "sha256": {
+        "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+        "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+      }
+    },
+    "input_sha256": {
+      "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+      "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+    },
+    "code_sha256": {
+      "refined_fractional.py": "b739311b3dc446b6c188749837e290bf519438330a4ed2f2d225e8733d392c6d",
+      "run_refinement.py": "dabcc786687a6f99d9aef7cf5b4547959a07e8872bf97229b81c851c467f9c3e",
+      "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+      "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859"
+    },
+    "protocol": {
+      "recorded_at_utc": "2026-10-18T17:34:48.407761+00:00",
+      "status": "Exploratory retrospective study; all available historical periods have been inspected in earlier research. No untouched-test or prospective claim.",
+      "model": "Normalized finite fractional-integral weights on squared standardized return innovations; implicit graph diffusion; positive intercept and feedback below one.",
+      "memory_length": 252,
+      "fractional_orders": [
+        0.2,
+        0.4,
+        0.6,
+        0.8
+      ],
+      "feedback": [
+        0.8,
+        0.95,
+        0.99
+      ],
+      "diffusion": [
+        0,
+        0.25,
+        1,
+        4
+      ],
+      "ewma_decays": [
+        0.9,
+        0.94,
+        0.97,
+        0.99
+      ],
+      "horizons": [
+        1,
+        5,
+        21
+      ],
+      "estimation_window": 1008,
+      "validation_length": 252,
+      "refit_min_spacing": 21,
+      "origin_step": 5,
+      "first_origin_position": 252,
+      "report_start": "2023-01-01",
+      "parameter_selection": "Equal-weight mean of 1/5/21-session normalized validation QLIKE, using all daily validation origins with complete 21-session targets. 252 trailing observations. Nuisance parameters fitted strictly before validation.",
+      "benchmarks": [
+        "historical",
+        "tuned EWMA",
+        "Gaussian QMLE GARCH(1,1)",
+        "fractional without diffusion",
+        "exponential memory with diffusion"
+      ],
+      "primary_score": "Normalized QLIKE against summed squared returns centered at the common origin-fitted mean; compare all methods on identical origins.",
+      "inference": "Paired circular block bootstrap 2000 replicates, blocks 5 and 10 origins, entire asset panel resampled together; nominal intervals, no family-wise significance claim.",
+      "mean_scope": "Risk/variance forecasts; no claim of directional price-prediction improvement.",
+      "legacy_core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+      "revision": "Persistent asymmetric fractional diffusion; exploratory follow-up after inspecting the first study.",
+      "smoothing": [
+        0,
+        0.5,
+        0.9
+      ],
+      "asymmetry": [
+        0,
+        1
+      ],
+      "models": [
+        "persistent_symmetric",
+        "persistent_asymmetric",
+        "asymmetric_no_graph",
+        "asymmetric_exponential",
+        "gjr_garch"
+      ],
+      "candidate_count_sector_per_kernel": 288,
+      "candidate_count_index_per_kernel": 72,
+      "model_equation": "h[t]=(1-b)*(1-eta)+b*h[t-1]+(1-b)*eta*A*sum(p[k]*q[t-1-k]*(1+delta*I(u<0))/(1+delta/2))",
+      "innovation_assumption": "Conditionally symmetric unit-variance shocks for asymmetric expected-moment recursions.",
+      "initialization": "Unit standardized variance and unit presample transformed squared innovations.",
+      "gjr": "Independent Gaussian QMLE; omega>0, alpha,beta,gamma>=0; alpha+beta+gamma/2<.999; two fixed starts.",
+      "original_code_sha256": {
+        "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+        "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859"
+      }
+    },
+    "first_origin": "2023-01-09",
+    "last_origin": "2026-09-17",
+    "last_target": "2026-10-16",
+    "origins": 186,
+    "refits_per_panel": {
+      "index": 38,
+      "sectors": 38
+    },
+    "nonconverged_gjr_fits": 0
+  },
+  "arch_version": "7.2.0",
+  "dates": {
+    "index": {
+      "first_origin": "2023-01-09",
+      "last_origin": "2026-09-17",
+      "last_target": "2026-10-16",
+      "origins": 186
+    },
+    "international": {
+      "first_origin": "2023-01-06",
+      "last_origin": "2026-09-16",
+      "last_target": "2026-10-15",
+      "origins": 186
+    },
+    "sectors": {
+      "first_origin": "2023-01-09",
+      "last_origin": "2026-09-17",
+      "last_target": "2026-10-16",
+      "origins": 186
+    }
+  },
+  "figarch_fits": 760,
+  "nonconverged_figarch_fits": 0,
+  "nonconverged_external_gjr_fits": 0,
+  "nonconverged_external_garch_fits": 0
+}

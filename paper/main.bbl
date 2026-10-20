@@ -1,0 +1,98 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Hosking(1981)]{hosking1981}
+J.~R.~M. Hosking.
+\newblock Fractional differencing.
+\newblock \emph{Biometrika}, 68\penalty0 (1):\penalty0 165--176, 1981.
+\newblock \doi{10.1093/biomet/68.1.165}.
+
+\bibitem[Baillie et~al.(1996)Baillie, Bollerslev, and Mikkelsen]{baillie1996}
+Richard~T. Baillie, Tim Bollerslev, and Hans~Ole Mikkelsen.
+\newblock Fractionally integrated generalized autoregressive conditional
+  heteroskedasticity.
+\newblock \emph{Journal of Econometrics}, 74\penalty0 (1):\penalty0 3--30,
+  1996.
+\newblock \doi{10.1016/S0304-4076(95)01749-6}.
+
+\bibitem[Shuman et~al.(2013)Shuman, Narang, Frossard, Ortega, and
+  Vandergheynst]{shuman2013}
+David~I. Shuman, Sunil~K. Narang, Pascal Frossard, Antonio Ortega, and Pierre
+  Vandergheynst.
+\newblock The emerging field of signal processing on graphs: Extending
+  high-dimensional data analysis to networks and other irregular domains.
+\newblock \emph{IEEE Signal Processing Magazine}, 30\penalty0 (3):\penalty0
+  83--98, 2013.
+\newblock \doi{10.1109/MSP.2012.2235192}.
+
+\bibitem[Otto et~al.(2018)Otto, Schmid, and Garthoff]{otto2018}
+Philipp Otto, Wolfgang Schmid, and Robert Garthoff.
+\newblock Generalised spatial and spatiotemporal autoregressive conditional
+  heteroscedasticity.
+\newblock \emph{Spatial Statistics}, 26:\penalty0 125--145, 2018.
+\newblock \doi{10.1016/j.spasta.2018.07.005}.
+
+\bibitem[Mattera and Otto(2024)]{mattera2024}
+Raffaele Mattera and Philipp Otto.
+\newblock Network log-{ARCH} models for forecasting stock market volatility.
+\newblock \emph{International Journal of Forecasting}, 40\penalty0
+  (4):\penalty0 1539--1555, 2024.
+\newblock \doi{10.1016/j.ijforecast.2024.01.002}.
+
+\bibitem[Zhou et~al.(2020)Zhou, Li, Pan, and Wang]{zhou2020}
+Jing Zhou, Dong Li, Rui Pan, and Hansheng Wang.
+\newblock Network {GARCH} model.
+\newblock \emph{Statistica Sinica}, 30\penalty0 (4):\penalty0 1723--1740, 2020.
+\newblock URL
+  \url{https://www3.stat.sinica.edu.tw/statistica/j30n4/j30n403/j30n403.html}.
+
+\bibitem[Pan and Pan(2024)]{pan2024}
+Yue Pan and Jiazhu Pan.
+\newblock Threshold network {GARCH} model.
+\newblock \emph{Journal of Time Series Analysis}, 45\penalty0 (6):\penalty0
+  910--930, 2024.
+\newblock \doi{10.1111/jtsa.12743}.
+
+\bibitem[Zhou(2026)]{zhou2026}
+Peiyi Zhou.
+\newblock A new implementation of network {GARCH} model for stock volatility
+  and co-volatility forecasting.
+\newblock \emph{Journal of Forecasting}, 2026.
+\newblock \doi{10.1002/for.70191}.
+\newblock Published online 12 July 2026.
+
+\bibitem[Ledoit and Wolf(2004)]{ledoit2004}
+Olivier Ledoit and Michael Wolf.
+\newblock A well-conditioned estimator for large-dimensional covariance
+  matrices.
+\newblock \emph{Journal of Multivariate Analysis}, 88\penalty0 (2):\penalty0
+  365--411, 2004.
+\newblock \doi{10.1016/S0047-259X(03)00096-4}.
+
+\bibitem[Bollerslev(1986)]{bollerslev1986}
+Tim Bollerslev.
+\newblock Generalized autoregressive conditional heteroskedasticity.
+\newblock \emph{Journal of Econometrics}, 31\penalty0 (3):\penalty0 307--327,
+  1986.
+\newblock \doi{10.1016/0304-4076(86)90063-1}.
+
+\bibitem[Patton(2011)]{patton2011}
+Andrew~J. Patton.
+\newblock Volatility forecast comparison using imperfect volatility proxies.
+\newblock \emph{Journal of Econometrics}, 160\penalty0 (1):\penalty0 246--256,
+  2011.
+\newblock \doi{10.1016/j.jeconom.2010.03.034}.
+
+\bibitem[Glosten et~al.(1993)Glosten, Jagannathan, and Runkle]{glosten1993}
+Lawrence~R. Glosten, Ravi Jagannathan, and David~E. Runkle.
+\newblock On the relation between the expected value and the volatility of the
+  nominal excess return on stocks.
+\newblock \emph{The Journal of Finance}, 48\penalty0 (5):\penalty0 1779--1801,
+  1993.
+\newblock \doi{10.1111/j.1540-6261.1993.tb05128.x}.
+
+\end{thebibliography}

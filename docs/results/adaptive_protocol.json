@@ -1,0 +1,26 @@
+{
+  "recorded_at_utc": "2026-10-17T13:59:08.798728+00:00",
+  "status": "Exploratory extension: all historical periods have been available during earlier reviews; no independent untouched test claim.",
+  "core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+  "features": "Original Gaussian memory forecasts at coupling scales 0, 0.5, 1, minus drift; controls: trailing return means over 1,5,21,63 observations and log ratio of 20/252-session realized volatility.",
+  "targets": "Direct origin-normalized price change at 1,5,21 sessions, residualized against expanding log-drift.",
+  "ridge_penalties": [
+    1.0,
+    10.0
+  ],
+  "training_windows": [
+    504,
+    1008
+  ],
+  "ridge_objective": "Mean squared residual plus penalty times squared standardized coefficients; unpenalized intercept.",
+  "selector": "Lowest matured prequential normalized MSE over previous 252 observations, at least 20 forecast origins; otherwise log-drift. Candidate controls: constant and drift. Separate selectors with and without memory.",
+  "intervals": "80 percent empirical absolute-error quantiles scaled by daily EWMA volatility (decay 0.94), learned only from matured past issued forecasts; no exchangeability guarantee.",
+  "feature_start": 252,
+  "forecast_origin_step": 5,
+  "minimum_training_origins": 40,
+  "minimum_selector_origins": 20,
+  "outer_report_start": "2023-01-01",
+  "evaluation": "All years 2023-2026, identical origins; report per-year loss, ablation and baseline comparisons without selecting the best test year.",
+  "latest": "Issue forecasts from latest available snapshot; record origin and input hashes, no invented exchange-calendar target dates.",
+  "no_test_tuning": true
+}

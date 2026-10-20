@@ -1,0 +1,30 @@
+{
+  "recorded_date": "2026-10-17",
+  "core": "Original GL-weighted recurrence, Hurst mapping, Gaussian innovations and reflected sector Laplacian unchanged",
+  "forecast": "Condition on observed returns, anchor last price, compute exact conditional lognormal mean",
+  "horizons": [
+    1,
+    5,
+    21
+  ],
+  "outer_default": "Last 30 percent; previous windows are exploratory because already inspected",
+  "new_period_test_start": "2026-01-05",
+  "inner_validation": "Final 40 percent of development, expanding origins every 21 observations; at least three complete origins",
+  "coupling_scale_candidates": [
+    0.0,
+    0.5,
+    1.0
+  ],
+  "forecast_blend": "Constrained least squares coefficient in [0,1] between memory mean and log-drift baseline, shared across sectors, selected per horizon on internal validation only",
+  "selection_score": "Mean squared price error divided by origin price squared; equal asset weighting",
+  "outer_origins_every": 5,
+  "refit_min_spacing": 21,
+  "baselines": [
+    "same-origin constant price",
+    "same-origin training log drift"
+  ],
+  "no_seed_selection": true,
+  "overlapping_targets": "21-session targets overlap; no iid confidence tests",
+  "claim_boundary": "If selected blend weight is zero, report it explicitly as baseline selection, not predictive memory evidence",
+  "new_period_max_prices": 10000
+}

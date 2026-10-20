@@ -1,0 +1,40 @@
+{
+  "recorded_at_utc": "2026-10-18T19:51:50.144093+00:00",
+  "status": "Locally timestamped specification recorded before downloading or inspecting the external price panel. Not an independently registered preregistration, prospective experiment, or statistically independent sample.",
+  "external_tickers": [
+    "EWA",
+    "EWC",
+    "EWG",
+    "EWH",
+    "EWJ",
+    "EWL",
+    "EWQ",
+    "EWU"
+  ],
+  "external_universe": "Eight US-listed iShares country equity ETFs: Australia, Canada, Germany, Hong Kong, Japan, Switzerland, France and United Kingdom. Fixed geographical spread among long-established developed-market funds; no outcome-based additions or removals.",
+  "universe_source": "https://www.ishares.com/us/literature/brochure/ishares-product-list-en-us.pdf",
+  "start_inclusive": "2018-01-01",
+  "end_exclusive": "2026-10-17",
+  "report_start": "2023-01-01",
+  "alignment": "All requested assets required; finite positive adjusted closes on the supplied trading-date panel; no imputation, ticker replacement or post-result universe changes.",
+  "fractional_model": "Unchanged refined_fractional.py rolling_refinement, including all earlier benchmarks and ablations; original grids, windows and horizon-aware selection.",
+  "additional_forecaster": "Exactly 0.5 times persistent_asymmetric variance plus 0.5 times gjr_garch variance at every origin/asset/horizon. No learned or retrospectively selected weights. Optional forecast ensemble, not a new fractional variance recurrence.",
+  "figarch": "arch 7.2.0 ZeroMean, Normal, FIGARCH(1,d,1), power 2, truncation 1000; standardized centered returns using the common origin-fitted mean and scale. Fit on preceding 1008 returns at original refits; default initial estimates, SLSQP maxiter1000 ftol1e-9. Preserve fitting backcast while updating with observed residuals between refits. Report finite nonconverged fits; abort nonfinite results; no substitution.",
+  "evaluation": "Same complete 1/5/21-session targets, every 5 observed sessions on grid starting at price position252; from 2023-01-01; minimum21 sessions between refits. Refit at25-session intervals on this grid. Primary normalized QLIKE, secondary normalized squared error. Annual and per-asset summaries retained.",
+  "comparison": "Standalone fractional and fixed ensemble against all references; paired circular block bootstrap 2000 replicates, seed1729, blocks5/10 origins, whole asset vectors resampled together. Nominal intervals, no multiplicity-adjusted significance claims.",
+  "development_analysis": "Append the same fixed ensemble and FIGARCH to the recorded US index/sector forecasts. These remain exploratory reused-history results, reported separately from external-universe replication.",
+  "stopping_rule": "One external evaluation of this fixed specification; report all results regardless of sign. No retuning from external losses. Any subsequently necessary bug fix must be disclosed separately; never silently rewrite this record.",
+  "limitations": "Country ETFs share trading hours, currency and global shocks with US assets. Historical prices are retrospectively adjusted, not point-in-time. Universe selection is deliberate, not random. External results are not a prospective trading test.",
+  "code_sha256": {
+    "external_validation.py": "a82892984f67e38a9945260b75c363e45a979efe52031684fc8bcdd8ab5df810",
+    "download_external.py": "a9d9fe63dae81d8714eabbd861586312dee5be3135bb36be1e867e154d95b34b",
+    "run_external.py": "52dbaad6f01d2653a31a57ed4ccaf1bb004292f4196d3002ac725de393c39c56",
+    "refined_fractional.py": "b739311b3dc446b6c188749837e290bf519438330a4ed2f2d225e8733d392c6d",
+    "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+    "run_refinement.py": "dabcc786687a6f99d9aef7cf5b4547959a07e8872bf97229b81c851c467f9c3e",
+    "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859",
+    "temporal_memory.py": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+    "requirements.txt": "a07477244c0196ddecbd4906d2191ced295f3c14914e7c12feb377fc5ed4b248"
+  },
+  "prior_protocol_sha256": "4fde749c41a7d283cd9a70e16185ef1107f468b925584e9d207f8bd0e8a2f5ee"
+}

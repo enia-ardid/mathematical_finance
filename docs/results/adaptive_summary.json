@@ -1,0 +1,67 @@
+{
+  "issued_at_utc": "2026-10-17T15:56:03.475494+00:00",
+  "source": {
+    "provider": "Yahoo Finance via yfinance",
+    "yfinance": "0.2.66",
+    "downloaded_at_utc": "2026-10-17T13:10:25.127708+00:00",
+    "start_inclusive": "2018-01-01",
+    "end_exclusive": "2026-10-17",
+    "auto_adjust": true,
+    "sha256": {
+      "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+      "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+    }
+  },
+  "input_sha256": {
+    "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+    "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+  },
+  "python": "3.12.10",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.1",
+    "scipy": "1.11.4",
+    "nolds": "0.6.2",
+    "scikit-learn": "1.7.1"
+  },
+  "code_sha256": {
+    "temporal_memory.py": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+    "forecasting.py": "e2f14b71024ae0913841715d23f956d7d8a1304f38dbe9d8adc02c1cd80db0ad",
+    "adaptive_forecasting.py": "74881d6a8d30ae2fd06c4fff2e790c5080a58ea8de8f4f48ef6de33082f82b66",
+    "run_adaptive.py": "ffa1eca439ee720eb9b29057b6f89c8aa90e0ce4b435c722fdde6458a1b4909f"
+  },
+  "protocol": {
+    "recorded_at_utc": "2026-10-17T13:59:08.798728+00:00",
+    "status": "Exploratory extension: all historical periods have been available during earlier reviews; no independent untouched test claim.",
+    "core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+    "features": "Original Gaussian memory forecasts at coupling scales 0, 0.5, 1, minus drift; controls: trailing return means over 1,5,21,63 observations and log ratio of 20/252-session realized volatility.",
+    "targets": "Direct origin-normalized price change at 1,5,21 sessions, residualized against expanding log-drift.",
+    "ridge_penalties": [
+      1.0,
+      10.0
+    ],
+    "training_windows": [
+      504,
+      1008
+    ],
+    "ridge_objective": "Mean squared residual plus penalty times squared standardized coefficients; unpenalized intercept.",
+    "selector": "Lowest matured prequential normalized MSE over previous 252 observations, at least 20 forecast origins; otherwise log-drift. Candidate controls: constant and drift. Separate selectors with and without memory.",
+    "intervals": "80 percent empirical absolute-error quantiles scaled by daily EWMA volatility (decay 0.94), learned only from matured past issued forecasts; no exchangeability guarantee.",
+    "feature_start": 252,
+    "forecast_origin_step": 5,
+    "minimum_training_origins": 40,
+    "minimum_selector_origins": 20,
+    "outer_report_start": "2023-01-01",
+    "evaluation": "All years 2023-2026, identical origins; report per-year loss, ablation and baseline comparisons without selecting the best test year.",
+    "latest": "Issue forecasts from latest available snapshot; record origin and input hashes, no invented exchange-calendar target dates.",
+    "no_test_tuning": true
+  },
+  "first_price": "2018-06-19",
+  "last_price": "2026-10-16",
+  "first_scored_origin": "2023-01-09",
+  "last_scored_origin": "2026-09-17",
+  "last_scored_target": "2026-10-16",
+  "scored_origins": 186,
+  "latest_origin": "2026-10-16",
+  "interpretation": "Exploratory retrospective evaluation; previously inspected history; no independent validation or trading-profit claim."
+}

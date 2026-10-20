@@ -1,0 +1,198 @@
+{
+  "source": {
+    "provider": "Yahoo Finance via yfinance",
+    "yfinance": "0.2.66",
+    "downloaded_at_utc": "2026-10-17T13:10:25.127708+00:00",
+    "start_inclusive": "2018-01-01",
+    "end_exclusive": "2026-10-17",
+    "auto_adjust": true,
+    "sha256": {
+      "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+      "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+    }
+  },
+  "input_sha256": {
+    "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+    "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+  },
+  "core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+  "python": "3.12.10",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.1",
+    "scipy": "1.11.4",
+    "nolds": "0.6.2",
+    "scikit-learn": "1.7.1"
+  },
+  "protocol": {
+    "horizons": [
+      1,
+      5,
+      21
+    ],
+    "origin_step": 5,
+    "refit_min_spacing": 21,
+    "validation_fraction": 0.4,
+    "validation_origin_step": 21,
+    "hurst_seed": 1729,
+    "inference": "exact conditional Gaussian moments"
+  },
+  "runs": {
+    "index": {
+      "first_price": "2018-06-19",
+      "last_price": "2026-10-16",
+      "development_end": "2026-01-02",
+      "first_origin": "2026-01-02",
+      "last_origin": "2026-09-15",
+      "first_target": "2026-01-05",
+      "last_target": "2026-10-14",
+      "validation_origins": [
+        "2022-12-22",
+        "2023-01-25",
+        "2023-02-24",
+        "2023-03-27",
+        "2023-04-26",
+        "2023-05-25",
+        "2023-06-27",
+        "2023-07-27",
+        "2023-08-25",
+        "2023-09-26",
+        "2023-10-25",
+        "2023-11-24",
+        "2023-12-26",
+        "2024-01-26",
+        "2024-02-27",
+        "2024-03-27",
+        "2024-04-26",
+        "2024-05-28",
+        "2024-06-27",
+        "2024-07-29",
+        "2024-08-27",
+        "2024-09-26",
+        "2024-10-25",
+        "2024-11-25",
+        "2024-12-26",
+        "2025-01-29",
+        "2025-02-28",
+        "2025-03-31",
+        "2025-04-30",
+        "2025-05-30",
+        "2025-07-01",
+        "2025-07-31",
+        "2025-08-29",
+        "2025-09-30",
+        "2025-10-29",
+        "2025-11-28"
+      ],
+      "test_origins": 36,
+      "refits": 8,
+      "choices": [
+        {
+          "horizon": 1,
+          "kappa_scale": 0.0,
+          "memory_weight": 0.02212462709439708,
+          "validation_mse": 6.259555484962477e-05,
+          "memory_mse": 0.00014228972000896473,
+          "drift_mse": 6.263635027132497e-05,
+          "validation_targets": 36
+        },
+        {
+          "horizon": 5,
+          "kappa_scale": 0.0,
+          "memory_weight": 0.0,
+          "validation_mse": 0.0005834892213968223,
+          "memory_mse": 0.000994083023163772,
+          "drift_mse": 0.0005834892213968223,
+          "validation_targets": 36
+        },
+        {
+          "horizon": 21,
+          "kappa_scale": 0.0,
+          "memory_weight": 0.0,
+          "validation_mse": 0.0009752958842453525,
+          "memory_mse": 0.0012094464301790938,
+          "drift_mse": 0.0009752958842453525,
+          "validation_targets": 36
+        }
+      ]
+    },
+    "sectors": {
+      "first_price": "2018-06-19",
+      "last_price": "2026-10-16",
+      "development_end": "2026-01-02",
+      "first_origin": "2026-01-02",
+      "last_origin": "2026-09-15",
+      "first_target": "2026-01-05",
+      "last_target": "2026-10-14",
+      "validation_origins": [
+        "2022-12-22",
+        "2023-01-25",
+        "2023-02-24",
+        "2023-03-27",
+        "2023-04-26",
+        "2023-05-25",
+        "2023-06-27",
+        "2023-07-27",
+        "2023-08-25",
+        "2023-09-26",
+        "2023-10-25",
+        "2023-11-24",
+        "2023-12-26",
+        "2024-01-26",
+        "2024-02-27",
+        "2024-03-27",
+        "2024-04-26",
+        "2024-05-28",
+        "2024-06-27",
+        "2024-07-29",
+        "2024-08-27",
+        "2024-09-26",
+        "2024-10-25",
+        "2024-11-25",
+        "2024-12-26",
+        "2025-01-29",
+        "2025-02-28",
+        "2025-03-31",
+        "2025-04-30",
+        "2025-05-30",
+        "2025-07-01",
+        "2025-07-31",
+        "2025-08-29",
+        "2025-09-30",
+        "2025-10-29",
+        "2025-11-28"
+      ],
+      "test_origins": 36,
+      "refits": 8,
+      "choices": [
+        {
+          "horizon": 1,
+          "kappa_scale": 0.5,
+          "memory_weight": 0.027389036720776933,
+          "validation_mse": 0.0001033889676890488,
+          "memory_mse": 0.00020297695035819603,
+          "drift_mse": 0.00010346794132444201,
+          "validation_targets": 396
+        },
+        {
+          "horizon": 5,
+          "kappa_scale": 0.0,
+          "memory_weight": 0.0,
+          "validation_mse": 0.0008057753631742874,
+          "memory_mse": 0.0011694716182888026,
+          "drift_mse": 0.0008057753631742874,
+          "validation_targets": 396
+        },
+        {
+          "horizon": 21,
+          "kappa_scale": 0.0,
+          "memory_weight": 0.0,
+          "validation_mse": 0.001907243454121304,
+          "memory_mse": 0.002082004129333039,
+          "drift_mse": 0.001907243454121304,
+          "validation_targets": 396
+        }
+      ]
+    }
+  }
+}

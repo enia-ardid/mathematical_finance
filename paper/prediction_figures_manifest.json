@@ -1,0 +1,63 @@
+{
+  "generated_at_utc": "2026-10-19T07:36:16.059311+00:00",
+  "scope": "Presentation only; frozen forecasts, fitted models and scores unchanged.",
+  "source_sha256": "29f4db12dd6505a6f1d52c13d0278f139d657c217dd528efb8ef243e5369395f",
+  "input_sha256": {
+    "artifacts/external-study-complete/forecasts.csv": "6bc68f6ae2eb0463bc650221140513ac0696ff49c48d923e71f1a6faae03f6ee",
+    "paper/metrics.csv": "020b73d716d020306f96222fb7903be9c8c2b23e59887fd6acac16c387edbf39",
+    "paper/external_metrics.csv": "9739f5c5983c96b1cb4ea6b7ed8222ca071420e5ad36e4183890577fb6e6ef39"
+  },
+  "figure2": "Raw mean normalized QLIKE, identical values to the initial-study table. Lower is better; EWMA shown explicitly.",
+  "time_axis": "Target-window end. Each prediction was issued horizon trading observations earlier.",
+  "transformation": "100*sqrt(252*sum_of_daily_variances/horizon); same transformation of the squared-return proxy. Panel variances averaged before square root; no covariance or portfolio interpretation.",
+  "scope_of_paths": {
+    "index_horizons": [
+      1,
+      5,
+      21
+    ],
+    "panel_horizons": [
+      5,
+      21
+    ],
+    "asset_horizon": 21,
+    "sectors": [
+      "XLB",
+      "XLE",
+      "XLF",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLRE",
+      "XLU",
+      "XLV",
+      "XLY",
+      "XLC"
+    ],
+    "countries": [
+      "EWA",
+      "EWC",
+      "EWG",
+      "EWH",
+      "EWJ",
+      "EWL",
+      "EWQ",
+      "EWU"
+    ],
+    "dates": "Full recorded evaluation period; no selected best-fit subperiods."
+  },
+  "outputs_sha256": {
+    "figures/forecast_comparison.pdf": "bc7286143e62e397b07015740c9268177c395a4cafb9fede308052d685335cc1",
+    "figures/forecast_comparison.png": "1698cca381f60903375cb211f46d2e7626a8314021c33e79d7435b0cbe5def50",
+    "figures/prediction_index_horizons.pdf": "e9db890ac256890399abe8cd4515e7907e54a0bb1a732f2c2a3bdacbea542312",
+    "figures/prediction_index_horizons.png": "7d3832a2b3e7e23ea871f7f77285b8aa02c08c0a22fbe3833b967560d831ea51",
+    "figures/prediction_panel_evolution.pdf": "5047050e2f10bf51ad3ffe40fa56386f7ddae5404b0a7053b6e8a1b444ab5442",
+    "figures/prediction_panel_evolution.png": "bf1318b517d053486f016375b692eccb43229083e496f8e75d0e1304425e7c06",
+    "figures/prediction_sectors_a.pdf": "b497352543c41576c0e6284794b653f14a2938b2883c6eaa41ce519a70ed7796",
+    "figures/prediction_sectors_a.png": "1ab74691f752e3e506084befe3743f9d30125438c3024dbb378daaf6dcb2a83d",
+    "figures/prediction_sectors_b.pdf": "3c9416197f4e918a2eb5bfee9a49ea82eee9eb8195fcc07712d7ad57ea3aadf3",
+    "figures/prediction_sectors_b.png": "7ea57a176458371bef8916e214cf89ef394a35483e524ba853ae458b6db4cbdd",
+    "figures/prediction_countries.pdf": "8a8a530d09ef09fe08d4a6c682f761121b4ff62acf0144ff5557c8e2d99c2ab4",
+    "figures/prediction_countries.png": "1fe1086bffed31191dabe2fae3926fc49b805179fb8962d311315ca978d05b6d"
+  }
+}

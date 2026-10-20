@@ -1,0 +1,12 @@
+{
+  "recorded_at_utc": "2026-10-19T07:00:36.145321+00:00",
+  "original_protocol_sha256": "1124ac7237b91596162a85b33ceba2b91b19bebd9384253b63c7a0806caec9cc",
+  "reason": "The first run completed unchanged fractional forecasts but failed at the first FIGARCH forecast because arch 7.2.0 requires C-contiguous residual arrays. A panel column is a strided array. No FIGARCH comparison results were produced or inspected before this correction.",
+  "changes": "Copy fit and forecast residuals to C-contiguous float arrays; make the runner validate and record this amendment. Add a regression test using strided panel columns. No model, parameter grid, benchmark, universe, score or evaluation dates change.",
+  "corrected_code_sha256": {
+    "external_validation.py": "6ff57a09b7f5805baad0f710c268848521b026e573d1c819394a301e1111d579",
+    "run_external.py": "238d49c4a2f1bab18fdfd0f1257a969d6852304c7149540619916f4cc4bba999"
+  },
+  "unchanged_core_forecasts_before_correction_sha256": "11c97292f843ad81193870c8870cc6b0ba012a7570aa66df314d3679aacdad49",
+  "validation": "Four focused tests pass after the correction, including library forecast equivalence on strided panel inputs. The earlier complete suite passed 53 tests before this correction."
+}

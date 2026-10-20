@@ -1,0 +1,113 @@
+{
+  "generated_at_utc": "2026-10-18T18:06:03.389216+00:00",
+  "source": {
+    "provider": "Yahoo Finance via yfinance",
+    "yfinance": "0.2.66",
+    "downloaded_at_utc": "2026-10-17T13:10:25.127708+00:00",
+    "start_inclusive": "2018-01-01",
+    "end_exclusive": "2026-10-17",
+    "auto_adjust": true,
+    "sha256": {
+      "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+      "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+    }
+  },
+  "input_sha256": {
+    "sp500_close.csv": "9201ce92f6aabf0da81e03fc5b21610a12fe7460e4f88f79f159d9c8e782033b",
+    "sector_etfs_close.csv": "650bfdd68af266a0976b8f7c1c89087e452f47ef86a4c7336d56aca413b837da"
+  },
+  "code_sha256": {
+    "refined_fractional.py": "b739311b3dc446b6c188749837e290bf519438330a4ed2f2d225e8733d392c6d",
+    "run_refinement.py": "dabcc786687a6f99d9aef7cf5b4547959a07e8872bf97229b81c851c467f9c3e",
+    "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+    "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859"
+  },
+  "protocol": {
+    "recorded_at_utc": "2026-10-18T17:34:48.407761+00:00",
+    "status": "Exploratory retrospective study; all available historical periods have been inspected in earlier research. No untouched-test or prospective claim.",
+    "model": "Normalized finite fractional-integral weights on squared standardized return innovations; implicit graph diffusion; positive intercept and feedback below one.",
+    "memory_length": 252,
+    "fractional_orders": [
+      0.2,
+      0.4,
+      0.6,
+      0.8
+    ],
+    "feedback": [
+      0.8,
+      0.95,
+      0.99
+    ],
+    "diffusion": [
+      0,
+      0.25,
+      1,
+      4
+    ],
+    "ewma_decays": [
+      0.9,
+      0.94,
+      0.97,
+      0.99
+    ],
+    "horizons": [
+      1,
+      5,
+      21
+    ],
+    "estimation_window": 1008,
+    "validation_length": 252,
+    "refit_min_spacing": 21,
+    "origin_step": 5,
+    "first_origin_position": 252,
+    "report_start": "2023-01-01",
+    "parameter_selection": "Equal-weight mean of 1/5/21-session normalized validation QLIKE, using all daily validation origins with complete 21-session targets. 252 trailing observations. Nuisance parameters fitted strictly before validation.",
+    "benchmarks": [
+      "historical",
+      "tuned EWMA",
+      "Gaussian QMLE GARCH(1,1)",
+      "fractional without diffusion",
+      "exponential memory with diffusion"
+    ],
+    "primary_score": "Normalized QLIKE against summed squared returns centered at the common origin-fitted mean; compare all methods on identical origins.",
+    "inference": "Paired circular block bootstrap 2000 replicates, blocks 5 and 10 origins, entire asset panel resampled together; nominal intervals, no family-wise significance claim.",
+    "mean_scope": "Risk/variance forecasts; no claim of directional price-prediction improvement.",
+    "legacy_core_sha256": "e04cd911683a91f4df6fa3b0d05690b640505b696730d17fc44f7350d171ce6f",
+    "revision": "Persistent asymmetric fractional diffusion; exploratory follow-up after inspecting the first study.",
+    "smoothing": [
+      0,
+      0.5,
+      0.9
+    ],
+    "asymmetry": [
+      0,
+      1
+    ],
+    "models": [
+      "persistent_symmetric",
+      "persistent_asymmetric",
+      "asymmetric_no_graph",
+      "asymmetric_exponential",
+      "gjr_garch"
+    ],
+    "candidate_count_sector_per_kernel": 288,
+    "candidate_count_index_per_kernel": 72,
+    "model_equation": "h[t]=(1-b)*(1-eta)+b*h[t-1]+(1-b)*eta*A*sum(p[k]*q[t-1-k]*(1+delta*I(u<0))/(1+delta/2))",
+    "innovation_assumption": "Conditionally symmetric unit-variance shocks for asymmetric expected-moment recursions.",
+    "initialization": "Unit standardized variance and unit presample transformed squared innovations.",
+    "gjr": "Independent Gaussian QMLE; omega>0, alpha,beta,gamma>=0; alpha+beta+gamma/2<.999; two fixed starts.",
+    "original_code_sha256": {
+      "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1",
+      "run_paper.py": "be49361866b0e460ebb6e1ecd8a18a0bb7a06c2308d201cb3eca5ae1b3d10859"
+    }
+  },
+  "first_origin": "2023-01-09",
+  "last_origin": "2026-09-17",
+  "last_target": "2026-10-16",
+  "origins": 186,
+  "refits_per_panel": {
+    "index": 38,
+    "sectors": 38
+  },
+  "nonconverged_gjr_fits": 0
+}
