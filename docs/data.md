@@ -41,3 +41,30 @@ python download_external.py --output artifacts/yahoo-international-new
 The separate downloader reads the frozen universe and dates, requires every asset, validates finite positive prices, performs no filling or ticker substitution, and refuses to overwrite a nonempty directory. It saves `prices.csv` and a manifest with the protocol hash. The recorded snapshot was downloaded on 18 October 2026 at 19:52:00 UTC, after the protocol was written at 19:51:50 UTC. It contains 2,210 prices per asset from 2 January 2018 through 16 October 2026. Its SHA-256 is `eb0262113b33dc8b4b00184a3a98253c520da5cb5b3c0350789425a0253fbcad`.
 
 This is a second universe, not an independent prospective dataset. These US-listed dollar-denominated funds share trading hours and global risk factors with the US development panel. Adjustment revisions, a deliberately selected universe and possible survivorship effects remain limitations. The protocol timestamp is a local audit record rather than independent proof of preregistration.
+
+## Data vintages and forecast availability
+
+A row's trading date and the date on which that version became available are different pieces of information. The rolling code uses rows dated through the forecast origin from a fixed downloaded snapshot. It does not reconstruct historical versions of those rows.
+
+For a single asset, let $P_t^{(T)}$ and $P_t^{(T')}$ denote the price for trading date $t$ in two download vintages. Define $a_t=P_t^{(T')}/P_t^{(T)}$. Then
+
+$$
+r_t^{(T')}-r_t^{(T)}
+=\log a_t-\log a_{t-1}.
+$$
+
+If the same multiplier applies to both prices in a return, it cancels. Uniform back-adjustment over a span therefore leaves returns inside that span unchanged. A change in the multiplier between adjacent dates can change the corresponding return. The [yfinance repair documentation](https://ranaroussi.github.io/yfinance/advanced/price_repair.html) describes missing dividend or split adjustments and corrections to historical prices. Those are possible mechanisms, not evidence that these errors occurred in the study's ETFs.
+
+Changed returns can affect the fitting means and scales, estimated graph, selected parameters and forecasts. A change inside a target window also affects its squared-return proxy and score. The direction of the effect is not known in advance. A single saved vintage cannot measure this sensitivity or establish that revisions favor a particular method. Downloading another historical snapshot now would measure a difference between two snapshots, not recover what was observable at every 2023–2026 origin.
+
+### Requirements for a prospective extension
+
+This is a description of a future study, not a registered protocol or an active collection service.
+
+1. Fix the code version, assets, horizons, refit and validation rules, score, collection period and reporting date before observing the new targets. Keep the existing studies intact.
+2. At each scheduled origin, save the complete received price vintage, request and reception times, adjustment convention, corporate-action records where available, and hashes. Archive the fitted state and all benchmark forecasts before the first target session, with an externally verifiable timestamp.
+3. Specify the target convention and capture delay before launch. Keep the first eligible target release immutable and retain later corrected versions as a separate sensitivity analysis. Score a given origin against its archived mean and scale.
+4. Preserve scheduled origins with missing data, failed fits or late forecasts in the audit log. Define their treatment in advance and report coverage; do not drop difficult periods after seeing their errors.
+5. Report after the fixed collection period, regardless of performance, allowing the longest horizon to mature. Any model or rule change creates a separately documented amendment and subsequent evaluation segment.
+
+The existing code and results have not been relabeled as prospective. Such a study needs forecasts recorded before outcomes occur and subsequent elapsed market time.

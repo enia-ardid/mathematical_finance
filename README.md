@@ -51,7 +51,7 @@ Lower QLIKE means a better variance forecast on the common targets. Pooled score
 | International | 5 sessions | 0.6636 | 0.6509 | 0.6496 | 0.6671 |
 | International | 21 sessions | 0.6715 | 0.6613 | 0.6623 | 0.6730 |
 
-The fixed ensemble improves on the standalone fractional model and FIGARCH in all nine pooled comparisons. It beats GJR-GARCH in three, with small margins; all ten-origin-block uncertainty ranges against GJR include zero. The international panel does not confirm a benefit from graph diffusion. The [complete external results](docs/external_validation.md) retain annual deterioration, per-asset exceptions and ablations. All 760 FIGARCH fits converged.
+The fixed ensemble improves on the standalone fractional model and FIGARCH in all nine pooled comparisons. It beats GJR-GARCH in three, with small margins; all nine nominal 95% paired intervals against GJR include zero at both block lengths (five and ten origins). This establishes neither superiority nor equivalence to GJR. The international panel does not confirm a benefit from graph diffusion. The [complete external results](docs/external_validation.md) retain annual deterioration, per-asset exceptions and ablations. All 760 FIGARCH fits converged.
 
 The earlier refinement itself improved the initial fractional specification in all six US comparisons and GARCH in four; GJR-GARCH remained stronger in all six. Those [earlier results](docs/refinement.md) and their [paired comparisons](paper/refinement_comparisons.csv) remain available. Neither successive gains nor external-universe extension establish directional price accuracy or trading profitability.
 
@@ -74,7 +74,7 @@ The [adaptive specification](docs/adaptive_forecasting.md) explains the regulari
 
 ## Reproducibility and scope
 
-Features, graph estimates, scaling, fitting and selection use information available at each forecast origin. The US historical periods were inspected during development. The international universe was fixed before its first download, but shares global shocks with the US assets and remains retrospective. Neither experiment is a prospective test. Daily squared-return targets are noisy volatility proxies, and retrospectively adjusted prices are not point-in-time data.
+Features, graph estimates, scaling, fitting and selection use only rows dated through each forecast origin in the recorded snapshot. The US historical periods were inspected during development. The international universe was fixed before its first download, but shares global shocks with the US assets and remains retrospective. Neither experiment is a prospective test. Daily squared-return targets are noisy volatility proxies. The [data-vintage discussion](docs/data.md#data-vintages-and-forecast-availability) explains which price revisions can change returns and what a prospective record would need to preserve.
 
 The **61 passing tests** cover future-price perturbations, training-label boundaries, conditional moments, interval scoring, alignment, reproducibility and portfolio aggregation. The variance tests check fractional kernels, graph positivity, energy contraction, asset relabeling, GARCH/GJR filtering, asymmetric normalization, validation alignment and simulated moments. The new checks cover FIGARCH library equivalence on strided panel inputs, correct ensemble scoring and the effective-memory impulse response. Eight additional Network GARCH tests check gradients, conditional forecasts, estimation constraints, asset relabeling and future-price independence.
 
