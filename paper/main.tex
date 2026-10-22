@@ -10,7 +10,7 @@
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
-\hypersetup{pdftitle={ETF Simulation with Temporal Memory: A Positive Fractional-Diffusive Volatility Model},pdfauthor={Enia Ardid and Pablo Casado de Amezu\'a}}
+\hypersetup{pdftitle={ETF Simulation with Temporal Memory: A Positive Fractional-Diffusive Volatility Model},pdfauthor={Enia Ardid and Pablo Casado de Amez\'ua}}
 \pagestyle{fancy}\fancyhf{}
 \fancyhead[L]{ETFs Simulation with Temporal Memory}
 \fancyhead[R]{\thepage}
@@ -36,9 +36,9 @@
 {\Large\bfseries ETFs Simulation with Temporal Memory:\\[0.25em]
 A Positive Fractional--Diffusive Volatility Model\par}
 \vspace{0.8cm}
-{\large Enia Ardid, Pablo Casado de Amezu\'a\par}
+{\large Enia Ardid, Pablo Casado de Amez\'ua\par}
 \vspace{0.2cm}
-{\small Research manuscript --- 19 October 2026\par}
+{\small Research manuscript --- 22 October 2026\par}
 \end{center}
 \vspace{0.5cm}
 \begin{abstract}
@@ -56,7 +56,9 @@ fixed 50:50 fractional/GJR forecast ensemble. The ensemble improves pooled QLIKE
 over the standalone fractional model and FIGARCH in all nine comparisons
 across the three panels. It exceeds GJR-GARCH in only three, with all paired
 ranges against GJR including zero. The country panel does not confirm a
-general diffusion benefit. The contribution is an explicit constrained
+general diffusion benefit. A subsequent Network GARCH comparison favors the
+fractional model in the country panel and the weighted network benchmark in
+the sector panel, with paired ranges including zero. The contribution is an explicit constrained
 fractional--diffusive risk model and a reproducible assessment of its properties,
 forecast combinations and limitations on retrospective adjusted-price data.
 \end{abstract}
@@ -87,41 +89,37 @@ whether temporal memory and sector interactions help forecast the magnitude of
 future fluctuations. This paper retains those two ingredients and assigns them
 to an explicit conditional-variance model.
 
-Fractional filters provide flexible history weighting. Infinite fractional
-differencing has a well-developed time-series interpretation
-\citep{hosking1981}, and FIGARCH introduces hyperbolic persistence into conditional
-heteroskedasticity \citep{baillie1996}. Neither construction implies that a Hurst
-estimate can be inserted into an arbitrary stochastic recurrence. Likewise,
-diffusion between economic categories requires a specified interaction operator;
-an imposed ordering of sector names is not an observed spatial coordinate.
-Graph operators offer an alternative for irregular domains \citep{shuman2013}.
+Fractional filters offer a flexible way to weight past observations. Fractional
+differencing \citep{hosking1981} and FIGARCH \citep{baillie1996} provide established
+time-series constructions with slowly decaying dependence. Here we use a finite,
+normalized fractional-integral kernel to summarize past squared innovations.
+Interactions between assets are represented by a correlation graph, so the
+diffusion operator acts on an estimated network rather than an ordering of
+sector names. Graph signal processing provides the corresponding operator
+framework \citep{shuman2013}.
 
 Spatial ARCH models already allow conditional heteroskedasticity to depend on
 neighboring locations \citep{otto2018}. For financial networks, network log-ARCH
 models combine temporal effects with contemporaneous network interactions
 \citep{mattera2024}. Our specification instead applies a positive graph
 resolvent to lagged squared innovations with a shared finite fractional kernel.
-It is a restricted multivariate ARCH model, rather than a new general class of
-network volatility processes. The specific parameterization and its empirical
-assessment must therefore be evaluated relative to that existing literature.
+The resulting model is a restricted multivariate ARCH specification: its lag
+matrices share a spatial operator and a common temporal profile.
 
 Our model applies a normalized finite fractional integral to squared standardized
 innovations, then smooths this signal through a correlation-graph resolvent.
 An explicit positive intercept and a feedback constraint control the resulting
-variance recursion. This formulation differs from both a fractional
-Black--Scholes equation and FIGARCH. It preserves the project's motivating idea
-while making its actual stochastic object, initialization and mathematical
-claims precise.
+variance recursion. The model is specified directly in discrete time and
+targets conditional variance. This gives the memory and diffusion terms a
+precise role while retaining a small set of interpretable parameters.
 
-The contributions are threefold. First, we state and implement a positive
-fractional--diffusive variance specification, with a graph construction that is
-equivariant to relabeling assets. Second, we establish positivity, diffusion
-contraction and fixed-parameter moment properties, and compute multi-step
-conditional variances without simulation error. Third, we compare the method
-against historical variance, tuned EWMA, GARCH and two structured ablations using
-identical chronological forecast origins. These are contributions of formulation
-and reproducible assessment; the study does not establish priority for the
-general combination of fractional kernels and graph smoothing.
+We develop this specification, establish its positivity and fixed-parameter
+moment properties, and derive multi-step conditional variances without
+simulation error. The empirical study then asks whether the fractional profile
+and graph diffusion improve forecasts at daily, weekly and monthly horizons.
+Comparisons include conventional volatility models, variants with individual
+components removed, and a separately recorded Network GARCH benchmark. Code,
+protocols and aggregate results accompany the study.
 
 \subsection{Position relative to network volatility models}
 Network GARCH already uses graph structure to reduce the dimension of
@@ -133,17 +131,14 @@ neighboring shock and variance terms alongside covariance forecasts
 present specification. Relative to these models, our restriction is a common
 positive resolvent at every lag and a normalized fractional temporal profile.
 Relative to FIGARCH, our finite normalized kernel and subunit feedback define
-a different recursion; FIGARCH is fitted directly in the additional experiment
-in Section~\ref{sec:external}. Published network models are discussed but not
-fitted, so no comparative performance claim is made against them.
+a different recursion. Section~\ref{sec:external} includes a fitted FIGARCH
+reference, and Section~\ref{sec:network} adds the first-order Network GARCH
+recursion of \citet{zhou2020}, adapted to the available correlation networks.
+Network log-ARCH, threshold Network GARCH and DCC-GNGARCH remain outside the
+fitted comparison. Our mathematical arguments specialize positive-filter
+results to the shared temporal and spatial structure; the effective impulse
+response below makes that restriction explicit.
 
-This narrower scope is intentional: an interpretable constrained model,
-explicit assumptions, exact forecast moments and reproducible comparisons.
-The mathematical results specialize positive-filter arguments rather than
-claiming a new general stationarity theorem. The temporal/spatial restriction
-is made explicit below through its impulse response.
-
-The results support a narrower conclusion than universal predictive superiority.
 The initial specification improves average losses relative to historical variance
 and EWMA, but GARCH remains stronger. A persistent asymmetric refinement improves
 all six pooled comparisons with that first specification and exceeds GARCH at
@@ -151,8 +146,8 @@ one and five observations in both US panels. GJR-GARCH remains stronger througho
 that standalone comparison. The additional external-universe study and fixed
 forecast combination extend the assessment in Section~\ref{sec:external}.
 Diffusion helps the one-session sector average modestly, with uncertainty ranges
-including zero. Both the improvement and the stronger counterexample are needed
-to assess the contribution of the fractional and diffusive components.
+including zero. These comparisons distinguish gains from persistence and
+asymmetry from the less consistent contribution of the memory profile and graph.
 
 \section{Data, notation and prediction target}
 \subsection{Observed prices and returns}
@@ -655,7 +650,7 @@ alternative. Annual improvements also vary: relative to the first specification,
 index loss rises at 21 sessions in 2024, and sector loss rises at 5/21 sessions
 in 2024 and at one session in 2025. All annual results remain in the public tables.
 
-\section{External-universe replication and a fixed forecast combination}
+\section{Extension to country ETFs and additional benchmarks}
 \label{sec:external}
 \subsection{A specification fixed before the new download}
 The previous two studies reuse US history inspected during development. To
@@ -674,8 +669,8 @@ used to revise that specification. This is a locally timestamped protocol,
 not an independently registered preregistration. The country panel was not
 previously evaluated in this project, but it shares global shocks, US trading
 hours and dollar denomination with the development assets. It is therefore an
-external-universe replication on retrospective data, not a statistically
-independent sample or a prospective experiment.
+extension of the asset universe on retrospective data. Shared shocks preclude
+treating it as an independent replication, and the experiment is not prospective.
 
 A computational amendment is recorded in the accompanying protocol files.
 The first attempt reached the
@@ -698,7 +693,17 @@ fitted or retrospectively selected combination weights. Positivity is
 preserved. The ensemble is an optional forecast combination, not a new
 generative fractional recurrence, and does not replace the standalone model.
 Its QLIKE is computed from the combined variance; component losses are not
-averaged. Forecast combinations are not themselves a novelty claim.
+averaged.
+
+Equal weighting gives each component the same contribution without estimating
+an additional parameter from this relatively short evaluation history. The
+weight was specified before the country-ETF download and is retained across
+assets and horizons. It is a transparent reference choice, not an estimated
+optimum. Learning a weight would require a further chronological validation
+layer and would introduce estimation uncertainty. Since GJR is already a strong
+component, improving on the fractional model alone is insufficient evidence of
+complementarity: the relevant comparison also includes GJR by itself. Both
+components are therefore reported alongside their combination.
 
 FIGARCH(1,$d$,1) \citep{baillie1996} is added as an estimated benchmark using
 \texttt{arch} 7.2.0, Gaussian QMLE and the library's 1,000-lag ARCH
@@ -738,6 +743,71 @@ FIGARCH. The index and sector panels reuse the development snapshot; the
 international panel follows the separately recorded external-universe protocol.}
 \label{fig:external}
 \end{figure}
+
+\subsection{Direct comparison with Network GARCH}
+\label{sec:network}
+A follow-up benchmark evaluates the first-order recursion of
+\citet{zhou2020}, equation (2.2), on the same sector and country panels:
+\begin{equation}
+h^{N}_t=\omega\one+\alpha z_{t-1}+\lambda Bz_{t-1}+\beta h^{N}_{t-1},
+\qquad \omega>0,\quad \alpha,\lambda,\beta\ge0,\quad
+\alpha+\lambda+\beta<0.999.
+\label{eq:network-benchmark}
+\end{equation}
+Here $B$ row-normalizes the positive squared correlation weights already used
+to construct the fractional model's graph. Its diagonal and isolated rows are
+zero. A sensitivity benchmark replaces these weights by binary edges at
+$R_{ij}\ge0.5$ before normalization; a pooled GARCH control sets $\lambda=0$.
+The coefficients are shared across the standardized assets. These choices
+adapt the published recursion to estimated correlation networks rather than
+the original shareholder network. They do not reproduce the original paper's
+empirical application or its assumptions of an exogenous network.
+
+At each of the 38 retained refits per panel, marginal Gaussian QMLE uses the
+preceding 1,008 returns, the common fitted means and scales, and initial
+normalized variance one. Three fixed starting points are optimized with
+analytic gradients; the fit with the lowest finite training objective is
+retained. Observed returns update the state between refits. The first future
+variance follows \eqref{eq:network-benchmark}; subsequent conditional
+expectations replace future $z_t$ by its conditional mean $h^N_t$. Daily
+forecasts are summed over the original horizons and evaluated on identical
+targets. All 228 selected fits and all 684 optimization starts converge.
+
+The new protocol was recorded after examining the earlier results and before
+fitting these benchmarks. It is an exploratory comparison on reused data;
+the fractional forecasts, combination weights and previous studies are
+unchanged. The index is excluded because a single asset supplies no network
+comparison. Annual scores, asset-level scores and all fitting attempts are
+retained with the protocol.
+
+\begin{table}[htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\input{tables/network_scores.tex}
+\caption{Mean normalized QLIKE for the separately recorded network comparison.
+The columns retain the same 1-, 5- and 21-session targets. Network GARCH uses
+shared coefficients; the pooled control removes its network term. Lower is better.}
+\label{tab:network}
+\end{table}
+
+\begingroup\clubpenalty=10000\widowpenalty=10000
+The weighted Network GARCH benchmark has lower pooled loss than the standalone
+fractional model at all three sector horizons; the ordering reverses at all
+three country horizons. Every paired 95\% range for these six differences
+includes zero at both block lengths. The fixed ensemble has lower pooled loss
+than either network variant and the pooled control in all six comparisons.
+Its one-session country difference against weighted Network GARCH is
+$-0.02660$, with ten-origin-block range $[-0.04645,-0.00747]$; the five-session
+range excludes zero with ten-origin blocks but includes it with five-origin
+blocks. The other four ranges include zero at both lengths.\par
+\endgroup
+
+Relative to pooled GARCH, weighted network feedback helps the sector mean at
+one and five sessions, but worsens it at 21 sessions and at all country
+horizons. All six paired ranges include zero. Binary network losses are higher
+than weighted network losses in each comparison. This additional experiment
+therefore supports a context-dependent role for cross-asset feedback while
+leaving GJR-GARCH a strong reference.
 
 \subsection{Observed evolution and rolling predictions}
 Aggregate losses summarize accuracy but do not show how forecasts respond over
@@ -801,48 +871,51 @@ not be interpreted as pointwise reproduction of the realized fluctuations.
 
 \clearpage
 \section{Interpretation, limitations and conclusions}
-The revised model preserves temporal fractional weighting and sector diffusion
-while assigning both to a well-defined positive variance process. The graph
-step is stable for every nonnegative diffusion strength, and the fixed-parameter
-recursion has a finite-second-moment return interpretation. These are meaningful
-improvements in mathematical specification. They do not repair the original
-price-PDE derivation by assertion: the present model is a new variance
-specification, and the earlier simulator is retained separately for continuity.
+Fractional weighting and graph diffusion provide an interpretable structure
+for a positive conditional-variance model. Its shared temporal profile and
+spatial resolvent keep the parameterization compact, while the fixed-parameter
+moment arguments and exact forecast recursion make its behavior explicit.
+This is a discrete variance specification; the original price simulator
+remains separate and is not justified by a fractional pricing PDE.
 
-The empirical conclusions are limited by four features of the study. First,
-the development and international panels use retrospective adjusted prices
-and share market shocks; neither is a prospective evaluation. Second, daily
-squared returns are noisy risk proxies. Third, the finite memory window,
-parameter grids and constant conditional mean restrict the model. Fourth,
-GJR-GARCH and several kernel-ablation comparisons remain stronger,
-while descriptive uncertainty ranges often include zero.
-FIGARCH is now fitted directly, but published network log-ARCH and network
-GARCH specifications are not; no advantage over those families is established.
+The clearest empirical improvement comes from persistence and asymmetric
+responses, which lower loss relative to the initial fractional specification
+in all six US comparisons. Combining the refined forecasts with GJR lowers
+pooled QLIKE further and outperforms FIGARCH in all nine panel--horizon
+comparisons. The direct network benchmark adds a useful contrast: weighted
+Network GARCH performs better in the sector panel, whereas the fractional
+model performs better in the country panel. Uncertainty ranges do not resolve
+these differences. GJR remains difficult to improve upon, and the country
+extension provides no general evidence that network feedback helps.
 
-Further work should retain point-in-time inputs and evaluate genuinely future
-targets, with richer volatility proxies and direct network-model benchmarks.
-Graph estimation uncertainty, richer conditional innovation laws and
-horizon-specific calibration remain open extensions. Claiming a causal contagion mechanism, a universally
-superior forecaster, profitable trading, or an infinite-memory limit would
-exceed the present evidence.
+Interpretation depends on the evaluation design. The panels share market
+shocks and use retrospective adjusted prices; moving to country ETFs extends
+the universe without providing independent or prospective confirmation.
+Squared daily returns also leave considerable noise in the risk target.
+The fixed memory window, shared graph operator and constant conditional mean
+restrict the dynamics that can be represented. These constraints help explain
+the model and delimit the questions answered by the experiments.
 
-The supported conclusion is that a positive fractional-integral filter with
-implicit graph diffusion is a coherent and reproducible model for ETF risk
-experiments. Persistence and normalized asymmetric responses improve the initial
-fractional specification in all six US pooled comparisons. A fixed combination
-with GJR further improves the standalone model and FIGARCH in all nine
-comparisons across three panels. Its small wins against GJR do not establish
-superiority, and the country-ETF replication does not confirm a general graph
-benefit. The model is a coherent risk-forecasting component with documented
-limitations; it does not establish directional price accuracy.
+A next study should prioritize point-in-time inputs, subsequently observed
+targets and richer volatility measurements. Comparing estimated network
+log-ARCH, threshold Network GARCH and dynamic-covariance models would further
+clarify which restrictions matter. The present evidence supports the
+fractional--diffusive specification as a transparent component for risk
+forecasting research, with mixed evidence for its network contribution.
 
 \appendix
 \section{Implementation and reproduction}
 The initial implementation is in \path{fractional_diffusion.py}; the benchmark and
 asset generator are in \path{run_paper.py}. The follow-up uses
-\path{refined_fractional.py} and \path{run_refinement.py}. External replication uses
+\path{refined_fractional.py} and \path{run_refinement.py}. The country-ETF extension uses
 \path{external_validation.py}, \path{download_external.py} and
-\path{run_external.py}. Existing return simulators and
+\path{run_external.py}.
+
+The network comparison is implemented in \path{network_benchmark.py}.
+Run it with \path{run_network_benchmark.py}; its separate protocol is
+\path{paper/network_protocol.json}.
+
+Existing return simulators and
 forecast heads remain separate. The recorded protocol is
 \path{paper/protocol.json}. Input hashes, candidate scores, graph estimates,
 selected parameters, optimizer statuses and each origin's forecasts are saved.
@@ -869,7 +942,9 @@ guide. External-study commands and source-package instructions are in
 a contents page and running headers, preserving the presentation of the
 original project report.
 
-The combined suite contains 53 passing tests on Python 3.12 under macOS.
+The combined suite contains 61 tests on Python 3.12 under macOS, including
+Network GARCH gradient checks, conditional-moment simulation comparisons,
+asset relabeling and future-price perturbations.
 Checks cover fractional weights, graph positivity and contraction, asset
 relabeling, GARCH/GJR filtering, exact moments against Monte Carlo, asymmetric
 normalization and validation forecasts against individually truncated histories.

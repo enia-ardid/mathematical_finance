@@ -4,7 +4,7 @@ This experiment preserves the persistent asymmetric fractional model exactly and
 
 ## Recorded design
 
-The [protocol](../paper/external_protocol.json) was recorded locally before downloading EWA, EWC, EWG, EWH, EWJ, EWL, EWQ and EWU. The [data guide](data.md) records the source, date range, adjustment convention and input hash. This is a retrospective external-universe replication. It is not an independently registered preregistration, a statistically independent sample or a prospective evaluation: these funds share currency denomination, trading hours and global shocks with the US panel.
+The [protocol](../paper/external_protocol.json) was recorded locally before downloading EWA, EWC, EWG, EWH, EWJ, EWL, EWQ and EWU. The [data guide](data.md) records the source, date range, adjustment convention and input hash. This is a retrospective external-universe extension. It is not an independently registered preregistration, a statistically independent sample or a prospective evaluation: these funds share currency denomination, trading hours and global shocks with the US panel.
 
 All model grids, fitting windows, refit spacing, validation rules and forecast horizons remain unchanged. The test universe is not changed after seeing results. Validation uses only observations available at each origin, and all compared models share each panel's targets, means and scales. The same fixed additions are evaluated on the previous US data, explicitly retaining that analysis's exploratory status.
 
@@ -20,6 +20,8 @@ $$
 $$
 
 The weight is fixed at one half for every asset, date and horizon. No new weight is learned or selected on results. The fractional component still uses its positive memory kernel and selected graph diffusion. This is an optional forecast ensemble, not a replacement for the core stochastic model or a new generative recursion.
+
+Equal weights avoid estimating an extra coefficient from the short evaluation history. They were fixed before the country-data download and are not claimed to be optimal. A learned combination would need a separate chronological validation layer. Because GJR is already strong, gains over the fractional component alone do not establish complementarity; the tables retain GJR as a direct comparison.
 
 The combination is positive, and its loss is recomputed:
 

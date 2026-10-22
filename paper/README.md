@@ -2,7 +2,7 @@
 
 `main.tex` is the English research manuscript; `main.pdf` is the compiled review copy. The source follows the original report's A4, 12-point Latin Modern typography, title page, contents page, numbered equations, single-column text and running header. Figures and numerical tables are generated from the recorded experiment. `latex-source.zip` contains the LaTeX sources and figure/table dependencies for a conventional LaTeX installation or Overleaf.
 
-This is a **new variance-model specification preserving fractional memory and sector diffusion**, not a claim that the original return recurrence solved a fractional Black–Scholes equation. The earlier implementation remains available. The manuscript supplies proofs of positivity, graph contraction and fixed-parameter moment stability, and an effective-kernel derivation. It includes the first study, a [persistent asymmetric refinement](../docs/refinement.md), and an [external-universe replication](../docs/external_validation.md) with FIGARCH and a fixed forecast combination.
+This is a **new variance-model specification preserving fractional memory and sector diffusion**, not a claim that the original return recurrence solved a fractional Black–Scholes equation. The earlier implementation remains available. The manuscript supplies proofs of positivity, graph contraction and fixed-parameter moment stability, and an effective-kernel derivation. It includes the first study, a [persistent asymmetric refinement](../docs/refinement.md), and an [external-universe extension](../docs/external_validation.md) with FIGARCH and a fixed forecast combination.
 
 ## Build
 
@@ -65,3 +65,16 @@ python run_external.py --external-dir artifacts/yahoo-international-new \
 ```
 
 To reproduce the recorded run, replace the external directory with `artifacts/yahoo-international-through-2026-10-16`. The complete local run is in `artifacts/external-study-complete`. The runner verifies source and data hashes, reuses the unchanged US forecasts, and refuses to overwrite a completed result. Do not alter the frozen protocol to disguise subsequent model development; a later statistical revision needs its own experiment record.
+
+
+## Network comparison and manuscript revision
+
+The [Network GARCH study](../docs/network_benchmark.md) applies the published first-order recursion to weighted and binary correlation networks, with a pooled control. Its protocol was recorded after earlier results were known and before fitting the new benchmarks. It preserves every reused fractional and reference forecast. All 228 selected fits converge; the complete test suite passes 61 tests.
+
+With the recorded local data and earlier study files, run the following from the repository root with a new output directory:
+
+~~~bash
+python run_network_benchmark.py --output artifacts/network-reproduction --publish-assets
+~~~
+
+The runner validates the source and snapshot hashes in `network_protocol.json`. A new price snapshot requires a separately recorded protocol, not overwriting this record. Public `network_*` files contain the protocol, summary, annual/pooled metrics, asset metrics and paired comparisons; the manuscript uses `tables/network_scores.tex`.
