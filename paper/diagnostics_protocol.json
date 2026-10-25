@@ -1,0 +1,44 @@
+{
+  "recorded_at_utc": "2026-10-23T09:23:10.730074+00:00",
+  "status": "Post-hoc diagnostics requested after all earlier study results were known. Rules recorded before computing these diagnostics; no new forecast model, retuning or independent validation.",
+  "forecasts": "artifacts/external-study-complete/forecasts.csv",
+  "dm_models": [
+    "persistent_asymmetric",
+    "equal_combination"
+  ],
+  "dm_reference": "gjr_garch",
+  "calibration_models": [
+    "persistent_asymmetric",
+    "equal_combination",
+    "gjr_garch"
+  ],
+  "expected_origins": 186,
+  "horizons": [
+    1,
+    5,
+    21
+  ],
+  "origin_stride_sessions": 5,
+  "hac_lags": [
+    4,
+    9
+  ],
+  "dm": "Mean QLIKE difference across all assets at each ordered origin. Bartlett HAC variance with 1/n autocovariances, no finite-sample multiplier; two-sided asymptotic normal p-values. Lags 4 primary and 9 sensitivity, in origin units, cover the four overlapping origin lags of the 21-session target. No automatic lag selection or small-sample h-based correction.",
+  "calibration": "At each origin average Y/(h*s^2) and V/(h*s^2) over all assets. OLS normalized target on intercept and normalized forecast. Bartlett HAC sandwich with n/(n-2) multiplier. Joint Wald chi-square(2) test of intercept=0 and slope=1; report coefficients, robust SE, R2, p-values. Aggregation can hide asset-level miscalibration. The regression is diagnostic only and is never applied to forecasts.",
+  "multiplicity": "Holm adjustment separately for the 18 DM comparisons and 27 calibration regressions at each lag choice. Lag 9 is sensitivity, not an additional opportunity to select significance. Adjustment does not correct prior researcher exposure or invalid marginal asymptotics.",
+  "degenerate": "Undefined tests retained with NA p-values and explicit status; kept in multiplicity family size. Never substitute iid standard errors.",
+  "wins": "Per asset and horizon, count paired origins with model-reference QLIKE < -1e-12; ties within 1e-12; losses otherwise. Separately count assets with lower full-period mean loss for panel/horizon bar chart. Descriptive dependent counts, not independent trials.",
+  "tie_tolerance": 1e-12,
+  "limitations": "Only 186 dependent origins, noisy proxies, rolling parameter estimation and reused retrospective data. HAC and Wald asymptotic assumptions are not established by the model second-moment proposition. No causal, trading-profit or definitive superiority claims.",
+  "input_sha256": {
+    "artifacts/external-study-complete/forecasts.csv": "6bc68f6ae2eb0463bc650221140513ac0696ff49c48d923e71f1a6faae03f6ee",
+    "paper/external_metrics.csv": "9739f5c5983c96b1cb4ea6b7ed8222ca071420e5ad36e4183890577fb6e6ef39",
+    "paper/external_comparisons.csv": "313a2e120d4195b276b6c171b0dd2f5b61a0a71fdad9d277065da909471b5556"
+  },
+  "code_sha256": {
+    "forecast_diagnostics.py": "ee05bb0f78b5d588bf6946126981c8295a627e03e953f28a3c6ab3339f9769be",
+    "run_forecast_diagnostics.py": "93eaacb36bbb71566168df3d4cc8bf7d662c64226231e8b91eacd8a27b6e1be6",
+    "tests/test_forecast_diagnostics.py": "f7fc199200b832e14a3a967e35cb5dd5ad8d1c5c9c36daf67a265f75c6751376",
+    "requirements.txt": "a07477244c0196ddecbd4906d2191ced295f3c14914e7c12feb377fc5ed4b248"
+  }
+}

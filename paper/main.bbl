@@ -1,15 +1,9 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Hosking(1981)]{hosking1981}
-J.~R.~M. Hosking.
-\newblock Fractional differencing.
-\newblock \emph{Biometrika}, 68\penalty0 (1):\penalty0 165--176, 1981.
-\newblock \doi{10.1093/biomet/68.1.165}.
 
 \bibitem[Baillie et~al.(1996)Baillie, Bollerslev, and Mikkelsen]{baillie1996}
 Richard~T. Baillie, Tim Bollerslev, and Hans~Ole Mikkelsen.
@@ -18,6 +12,124 @@ Richard~T. Baillie, Tim Bollerslev, and Hans~Ole Mikkelsen.
 \newblock \emph{Journal of Econometrics}, 74\penalty0 (1):\penalty0 3--30,
   1996.
 \newblock \doi{10.1016/S0304-4076(95)01749-6}.
+
+\bibitem[Barndorff-Nielsen and Shephard(2002)]{barndorff2002}
+Ole~E. Barndorff-Nielsen and Neil Shephard.
+\newblock Econometric analysis of realized volatility and its use in estimating
+  stochastic volatility models.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 64\penalty0 (2):\penalty0 253--280, 2002.
+\newblock \doi{10.1111/1467-9868.00336}.
+
+\bibitem[Bollerslev(1986)]{bollerslev1986}
+Tim Bollerslev.
+\newblock Generalized autoregressive conditional heteroskedasticity.
+\newblock \emph{Journal of Econometrics}, 31\penalty0 (3):\penalty0 307--327,
+  1986.
+\newblock \doi{10.1016/0304-4076(86)90063-1}.
+
+\bibitem[Bollerslev et~al.(2016)Bollerslev, Patton, and
+  Quaedvlieg]{bollerslev2016}
+Tim Bollerslev, Andrew~J. Patton, and Rogier Quaedvlieg.
+\newblock Exploiting the errors: A simple approach for improved volatility
+  forecasting.
+\newblock \emph{Journal of Econometrics}, 192\penalty0 (1):\penalty0 1--18,
+  2016.
+\newblock \doi{10.1016/j.jeconom.2015.10.007}.
+
+\bibitem[Corsi(2009)]{corsi2009}
+Fulvio Corsi.
+\newblock A simple approximate long-memory model of realized volatility.
+\newblock \emph{Journal of Financial Econometrics}, 7\penalty0 (2):\penalty0
+  174--196, 2009.
+\newblock \doi{10.1093/jjfinec/nbp001}.
+
+\bibitem[Diebold and Mariano(1995)]{diebold1995}
+Francis~X. Diebold and Roberto~S. Mariano.
+\newblock Comparing predictive accuracy.
+\newblock \emph{Journal of Business \& Economic Statistics}, 13\penalty0
+  (3):\penalty0 253--263, 1995.
+\newblock \doi{10.1080/07350015.1995.10524599}.
+
+\bibitem[Glosten et~al.(1993)Glosten, Jagannathan, and Runkle]{glosten1993}
+Lawrence~R. Glosten, Ravi Jagannathan, and David~E. Runkle.
+\newblock On the relation between the expected value and the volatility of the
+  nominal excess return on stocks.
+\newblock \emph{The Journal of Finance}, 48\penalty0 (5):\penalty0 1779--1801,
+  1993.
+\newblock \doi{10.1111/j.1540-6261.1993.tb05128.x}.
+
+\bibitem[Holm(1979)]{holm1979}
+Sture Holm.
+\newblock A simple sequentially rejective multiple test procedure.
+\newblock \emph{Scandinavian Journal of Statistics}, 6\penalty0 (2):\penalty0
+  65--70, 1979.
+\newblock \doi{10.2307/4615733}.
+
+\bibitem[Hosking(1981)]{hosking1981}
+J.~R.~M. Hosking.
+\newblock Fractional differencing.
+\newblock \emph{Biometrika}, 68\penalty0 (1):\penalty0 165--176, 1981.
+\newblock \doi{10.1093/biomet/68.1.165}.
+
+\bibitem[Ledoit and Wolf(2004)]{ledoit2004}
+Olivier Ledoit and Michael Wolf.
+\newblock A well-conditioned estimator for large-dimensional covariance
+  matrices.
+\newblock \emph{Journal of Multivariate Analysis}, 88\penalty0 (2):\penalty0
+  365--411, 2004.
+\newblock \doi{10.1016/S0047-259X(03)00096-4}.
+
+\bibitem[Mattera and Otto(2024)]{mattera2024}
+Raffaele Mattera and Philipp Otto.
+\newblock Network log-{ARCH} models for forecasting stock market volatility.
+\newblock \emph{International Journal of Forecasting}, 40\penalty0
+  (4):\penalty0 1539--1555, 2024.
+\newblock \doi{10.1016/j.ijforecast.2024.01.002}.
+
+\bibitem[Mincer and Zarnowitz(1969)]{mincer1969}
+Jacob Mincer and Victor Zarnowitz.
+\newblock The evaluation of economic forecasts.
+\newblock In Jacob Mincer, editor, \emph{Economic Forecasts and Expectations:
+  Analysis of Forecasting Behavior and Performance}, pages 3--46. National
+  Bureau of Economic Research, 1969.
+\newblock URL \url{https://www.nber.org/system/files/chapters/c1214/c1214.pdf}.
+
+\bibitem[Newey and West(1987)]{newey1987}
+Whitney~K. Newey and Kenneth~D. West.
+\newblock A simple, positive semi-definite, heteroskedasticity and
+  autocorrelation consistent covariance matrix.
+\newblock \emph{Econometrica}, 55\penalty0 (3):\penalty0 703--708, 1987.
+\newblock \doi{10.2307/1913610}.
+
+\bibitem[Otto et~al.(2018)Otto, Schmid, and Garthoff]{otto2018}
+Philipp Otto, Wolfgang Schmid, and Robert Garthoff.
+\newblock Generalised spatial and spatiotemporal autoregressive conditional
+  heteroscedasticity.
+\newblock \emph{Spatial Statistics}, 26:\penalty0 125--145, 2018.
+\newblock \doi{10.1016/j.spasta.2018.07.005}.
+
+\bibitem[Pan and Pan(2024)]{pan2024}
+Yue Pan and Jiazhu Pan.
+\newblock Threshold network {GARCH} model.
+\newblock \emph{Journal of Time Series Analysis}, 45\penalty0 (6):\penalty0
+  910--930, 2024.
+\newblock \doi{10.1111/jtsa.12743}.
+
+\bibitem[Patton(2011)]{patton2011}
+Andrew~J. Patton.
+\newblock Volatility forecast comparison using imperfect volatility proxies.
+\newblock \emph{Journal of Econometrics}, 160\penalty0 (1):\penalty0 246--256,
+  2011.
+\newblock \doi{10.1016/j.jeconom.2010.03.034}.
+
+\bibitem[Patton and Sheppard(2009)]{patton2009}
+Andrew~J. Patton and Kevin Sheppard.
+\newblock Evaluating volatility and correlation forecasts.
+\newblock In Torben~Gustav Andersen, Richard~A. Davis, Jens-Peter Krei{\ss},
+  and Thomas Mikosch, editors, \emph{Handbook of Financial Time Series}, pages
+  801--838. Springer, 2009.
+\newblock \doi{10.1007/978-3-540-71297-8_36}.
 
 \bibitem[Shuman et~al.(2013)Shuman, Narang, Frossard, Ortega, and
   Vandergheynst]{shuman2013}
@@ -29,19 +141,21 @@ David~I. Shuman, Sunil~K. Narang, Pascal Frossard, Antonio Ortega, and Pierre
   83--98, 2013.
 \newblock \doi{10.1109/MSP.2012.2235192}.
 
-\bibitem[Otto et~al.(2018)Otto, Schmid, and Garthoff]{otto2018}
-Philipp Otto, Wolfgang Schmid, and Robert Garthoff.
-\newblock Generalised spatial and spatiotemporal autoregressive conditional
-  heteroscedasticity.
-\newblock \emph{Spatial Statistics}, 26:\penalty0 125--145, 2018.
-\newblock \doi{10.1016/j.spasta.2018.07.005}.
+\bibitem[Timmermann(2006)]{timmermann2006}
+Allan Timmermann.
+\newblock Forecast combinations.
+\newblock In Graham Elliott, Clive W.~J. Granger, and Allan Timmermann,
+  editors, \emph{Handbook of Economic Forecasting}, volume~1, pages 135--196.
+  Elsevier, 2006.
+\newblock \doi{10.1016/S1574-0706(05)01004-9}.
 
-\bibitem[Mattera and Otto(2024)]{mattera2024}
-Raffaele Mattera and Philipp Otto.
-\newblock Network log-{ARCH} models for forecasting stock market volatility.
-\newblock \emph{International Journal of Forecasting}, 40\penalty0
-  (4):\penalty0 1539--1555, 2024.
-\newblock \doi{10.1016/j.ijforecast.2024.01.002}.
+\bibitem[{yfinance contributors}(n.d.)]{yfinance_repair}
+{yfinance contributors}.
+\newblock Price repair.
+\newblock yfinance documentation, n.d.
+\newblock URL
+  \url{https://ranaroussi.github.io/yfinance/advanced/price_repair.html}.
+\newblock Accessed 23 October 2026.
 
 \bibitem[Zhou et~al.(2020)Zhou, Li, Pan, and Wang]{zhou2020}
 Jing Zhou, Dong Li, Rui Pan, and Hansheng Wang.
@@ -51,13 +165,6 @@ Jing Zhou, Dong Li, Rui Pan, and Hansheng Wang.
 \newblock URL
   \url{https://www3.stat.sinica.edu.tw/statistica/j30n4/j30n403/j30n403.html}.
 
-\bibitem[Pan and Pan(2024)]{pan2024}
-Yue Pan and Jiazhu Pan.
-\newblock Threshold network {GARCH} model.
-\newblock \emph{Journal of Time Series Analysis}, 45\penalty0 (6):\penalty0
-  910--930, 2024.
-\newblock \doi{10.1111/jtsa.12743}.
-
 \bibitem[Zhou(2026)]{zhou2026}
 Peiyi Zhou.
 \newblock A new implementation of network {GARCH} model for stock volatility
@@ -65,43 +172,5 @@ Peiyi Zhou.
 \newblock \emph{Journal of Forecasting}, 2026.
 \newblock \doi{10.1002/for.70191}.
 \newblock Published online 12 July 2026.
-
-\bibitem[Ledoit and Wolf(2004)]{ledoit2004}
-Olivier Ledoit and Michael Wolf.
-\newblock A well-conditioned estimator for large-dimensional covariance
-  matrices.
-\newblock \emph{Journal of Multivariate Analysis}, 88\penalty0 (2):\penalty0
-  365--411, 2004.
-\newblock \doi{10.1016/S0047-259X(03)00096-4}.
-
-\bibitem[Bollerslev(1986)]{bollerslev1986}
-Tim Bollerslev.
-\newblock Generalized autoregressive conditional heteroskedasticity.
-\newblock \emph{Journal of Econometrics}, 31\penalty0 (3):\penalty0 307--327,
-  1986.
-\newblock \doi{10.1016/0304-4076(86)90063-1}.
-
-\bibitem[Patton(2011)]{patton2011}
-Andrew~J. Patton.
-\newblock Volatility forecast comparison using imperfect volatility proxies.
-\newblock \emph{Journal of Econometrics}, 160\penalty0 (1):\penalty0 246--256,
-  2011.
-\newblock \doi{10.1016/j.jeconom.2010.03.034}.
-
-\bibitem[Glosten et~al.(1993)Glosten, Jagannathan, and Runkle]{glosten1993}
-Lawrence~R. Glosten, Ravi Jagannathan, and David~E. Runkle.
-\newblock On the relation between the expected value and the volatility of the
-  nominal excess return on stocks.
-\newblock \emph{The Journal of Finance}, 48\penalty0 (5):\penalty0 1779--1801,
-  1993.
-\newblock \doi{10.1111/j.1540-6261.1993.tb05128.x}.
-
-\bibitem[{yfinance contributors}(n.d.)]{yfinance_repair}
-{yfinance contributors}.
-\newblock Price repair.
-\newblock yfinance documentation, n.d.
-\newblock URL
-  \url{https://ranaroussi.github.io/yfinance/advanced/price_repair.html}.
-\newblock Accessed 23 October 2026.
 
 \end{thebibliography}

@@ -38,7 +38,7 @@ def main():
             archive.write(path, path.relative_to(root))
         archive.writestr('README.txt',
                          'Main document: main.tex. Build with latexmk -pdf main.tex or tectonic --reruns 3 main.tex.\n'
-                         'This review bundle includes aggregate results and protocol records; no raw market data.\n'
+                         'This bundle includes aggregate results and protocol records; no raw market data.\n'
                          'Numerical reproduction requires the accompanying repository and documented data snapshots.\n')
     print(f'Packaged {len(required)} TeX dependencies and {len(review) - len(required)} result/metadata files.')
 

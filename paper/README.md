@@ -1,6 +1,6 @@
-# Revised manuscript
+# Research manuscript
 
-`main.tex` is the English research manuscript; `main.pdf` is the compiled review copy. The source follows the original report's A4, 12-point Latin Modern typography, title page, contents page, numbered equations, single-column text and running header. Figures and numerical tables are generated from the recorded experiment. `latex-source.zip` contains the LaTeX sources and figure/table dependencies for a conventional LaTeX installation or Overleaf.
+`main.tex` is the English research manuscript; `main.pdf` is the compiled manuscript. The source follows the original report's A4, 12-point Latin Modern typography, title page, contents page, numbered equations, single-column text and running header. Figures and numerical tables are generated from the recorded experiment. `latex-source.zip` contains the LaTeX sources and figure/table dependencies for a conventional LaTeX installation or Overleaf.
 
 This is a **new variance-model specification preserving fractional memory and sector diffusion**, not a claim that the original return recurrence solved a fractional Black–Scholes equation. The earlier implementation remains available. The manuscript supplies proofs of positivity, graph contraction and fixed-parameter moment stability, and an effective-kernel derivation. It includes the first study, a [persistent asymmetric refinement](../docs/refinement.md), and an [external-universe extension](../docs/external_validation.md) with FIGARCH and a fixed forecast combination.
 
@@ -33,7 +33,7 @@ python -m unittest discover -s tests -v
 
 The [data guide](../docs/data.md) explains how to download a documented snapshot. Exact recorded inputs are retained locally, not redistributed; a new adjusted-price download can differ. The market command exports origin-level predictions and complete fitting audits to ignored artifacts, and copies aggregate metrics, paired comparisons, figures and LaTeX tables into this folder. The synthetic example has independent Gaussian returns without an imposed fractional or volatility mechanism.
 
-After all numerical exporters, run `python render_prediction_figures.py --study artifacts/external-study-complete` before building the PDF. This presentation step replaces Figure 2 with direct QLIKE scores including EWMA and adds observed-versus-forecast paths at all three index horizons, panel summaries and every ETF. See the [figure guide](../docs/prediction_figures.md) for units, date alignment and regeneration. The recorded model code, forecasts and losses are unchanged.
+After all numerical exporters, run `python render_submission_assets.py` before building the PDF. This regenerates all eleven figures and ten table fragments from saved forecasts and diagnostic records. Figure 2 displays direct QLIKE scores including EWMA; path figures include all three index horizons, panel summaries and every ETF. See the [figure guide](../docs/prediction_figures.md) for units, date alignment and regeneration. The recorded model code, forecasts and losses are unchanged.
 
 - `protocol.json`: candidate grids and evaluation rules recorded before this experiment.
 - `summary.json`: source metadata, input/code hashes, dates and optimizer-convergence counts.
@@ -42,7 +42,9 @@ After all numerical exporters, run `python render_prediction_figures.py --study 
 - `refinement_*`: separate protocol, metadata and results for the persistent asymmetric follow-up.
 - `external_*`: separate external-universe protocol, disclosed computational amendment, metadata, aggregate/annual/asset-level scores and paired comparisons.
 - `tables/` and `figures/`: generated manuscript assets.
-- `prediction_figures_manifest.json`: presentation-source, input and output hashes for the direct-score comparison and expanded prediction plots.
+- `submission_assets_manifest.json`: presentation-source, input and output hashes for every manuscript figure and generated table.
+- `prediction_figures_manifest.json`: compatible subset manifest for the six prediction figures.
+- `diagnostics_*`: recorded diagnostic rules, a CSV-tolerance amendment, summary and DM, calibration and win-count records.
 
 ## What the paper supports
 
@@ -50,7 +52,7 @@ In the US development study, the first fractional model has lower pooled QLIKE t
 
 The later fixed 50:50 fractional/GJR ensemble improves on the standalone refined model and FIGARCH in all nine pooled comparisons across the US index, US sectors and eight international ETFs. It beats GJR in three; all nine nominal 95% paired intervals include zero at both block lengths. This establishes neither superiority nor equivalence to GJR. The external panel does not confirm a benefit from graph diffusion. Annual, per-asset and secondary-score exceptions are retained in the [external study](../docs/external_validation.md).
 
-The mathematical reformulation and reproducible benchmark support a substantive research draft. The model is a restricted multivariate ARCH specification; the [related-work comparison](../docs/related_work.md) explains its relationship to FIGARCH, spatial ARCH, network log-ARCH, network GARCH and threshold network GARCH. It does not establish novelty priority, editorial acceptance, universal predictive superiority or trading profitability.
+The mathematical reformulation and reproducible benchmark provide a structured assessment of the model. The model is a restricted multivariate ARCH specification; the [related-work comparison](../docs/related_work.md) explains its relationship to FIGARCH, spatial ARCH, network log-ARCH, network GARCH and threshold network GARCH. It does not establish novelty priority, editorial acceptance, universal predictive superiority or trading profitability.
 
 ## Reproduce the external study
 
@@ -64,12 +66,12 @@ python run_external.py --external-dir artifacts/yahoo-international-new \
   --output artifacts/external-reproduction --publish-assets
 ```
 
-To reproduce the recorded run, replace the external directory with `artifacts/yahoo-international-through-2026-10-16`. The complete local run is in `artifacts/external-study-complete`. The runner verifies source and data hashes, reuses the unchanged US forecasts, and refuses to overwrite a completed result. Do not alter the frozen protocol to disguise subsequent model development; a later statistical revision needs its own experiment record.
+To reproduce the recorded run, replace the external directory with `artifacts/yahoo-international-through-2026-10-16`. The complete local run is in `artifacts/external-study-complete`. The runner verifies source and data hashes, reuses the unchanged US forecasts, and refuses to overwrite a completed result. Further statistical changes require a separate experiment record; the frozen protocol identifies the recorded run.
 
 
-## Network comparison and manuscript revision
+## Network comparison
 
-The [Network GARCH study](../docs/network_benchmark.md) applies the published first-order recursion to weighted and binary correlation networks, with a pooled control. Its protocol was recorded after earlier results were known and before fitting the new benchmarks. It preserves every reused fractional and reference forecast. All 228 selected fits converge; the complete test suite passes 61 tests.
+The [Network GARCH study](../docs/network_benchmark.md) applies the published first-order recursion to weighted and binary correlation networks, with a pooled control. Its protocol was recorded after earlier results were known and before fitting the new benchmarks. It preserves every reused fractional and reference forecast. All 228 selected fits converge; the complete test suite passes 66 tests.
 
 With the recorded local data and earlier study files, run the following from the repository root with a new output directory:
 
@@ -78,3 +80,16 @@ python run_network_benchmark.py --output artifacts/network-reproduction --publis
 ~~~
 
 The runner validates the source and snapshot hashes in `network_protocol.json`. A new price snapshot requires a separately recorded protocol, not overwriting this record. Public `network_*` files contain the protocol, summary, annual/pooled metrics, asset metrics and paired comparisons; the manuscript uses `tables/network_scores.tex`.
+
+## Additional diagnostics and presentation checks
+
+The [diagnostic specification](../docs/forecast_diagnostics.md) defines the paired DM tests, Mincer–Zarnowitz regressions and win counts, including HAC lag choices and Holm families. These diagnostics use saved forecasts without recalibration. They were specified after the earlier results were known and are exploratory.
+
+```bash
+python run_forecast_diagnostics.py --output artifacts/diagnostics-reproduction
+python render_submission_assets.py
+python render_submission_assets.py --output artifacts/presentation-reproduction
+python verify_submission.py
+```
+
+Use a fresh output directory for the diagnostic runner. The presentation renderer needs the retained origin-level records under `artifacts/`; it never fits a model. The [verification record](../docs/verification.md) describes the checks on figures, tables, citations and source archives.

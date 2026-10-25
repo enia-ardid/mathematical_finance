@@ -55,7 +55,7 @@ Network feedback itself improves the pooled GARCH control at sector horizons 1/5
 
 ## Verification and reproduction
 
-Eight additional tests check the literal recursion, analytic gradients against numerical derivatives, reduction to ordinary GARCH, conditional forecasts against simulations, asset relabeling, valid estimation, invalid-input rejection and future-price independence. The complete suite passes **61 tests**.
+Eight additional tests check the literal recursion, analytic gradients against numerical derivatives, reduction to ordinary GARCH, conditional forecasts against simulations, asset relabeling, valid estimation, invalid-input rejection and future-price independence. The complete suite passes **66 tests**.
 
 Using the recorded local snapshots and study files:
 

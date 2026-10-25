@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-10-23T09:25:50.827771+00:00",
+  "prior_protocol_sha256": "1b1a6fecff8644675caee1bdfc72e52b746155f07681265419959964d131ed40",
+  "reason": "Initial execution aborted in the input QLIKE reconstruction check before any DM, calibration or win-count calculation. Ten of 145080 saved scores differ from reconstruction by at most 1.93067784e-12, consistent with retained CSV precision. Absolute validation tolerance increased from 1e-12 to 1e-10; original recorded losses remain the test inputs, unchanged. No statistical rule, model, target or comparison changed.",
+  "loss_reconstruction_atol": 1e-10,
+  "code_sha256": {
+    "run_forecast_diagnostics.py": "24172a5bfb6ada1f015939adde6d467ffaa2c48f9b40de275ecbc3994a0d82f2"
+  }
+}
