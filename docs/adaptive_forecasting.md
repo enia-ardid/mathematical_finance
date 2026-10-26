@@ -2,7 +2,7 @@
 
 This extension keeps `temporal_memory.py` and `forecasting.py` unchanged. It learns a **direct forecast head** around the original memory forecasts. This is a different prediction layer from both the simulator and the earlier nonnegative blend. It can learn a negative correction, shrink weak signals, and select a simpler reference when past forecasts favor it.
 
-The purpose is to test whether the memory signal adds useful information. A separately fitted version without memory is evaluated on identical targets. Baseline selection, negative results and the contribution of the forecast head must remain visible.
+The purpose is to test whether the memory signal adds useful information. A separately fitted version without memory is evaluated on identical targets. Both versions share the same baseline selection and evaluation dates.
 
 ## Features and targets
 

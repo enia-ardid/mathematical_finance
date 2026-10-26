@@ -21,8 +21,6 @@ Score tables use four decimal places and right-aligned numeric columns. Bold ind
 
 Build the manuscript using the commands in the [paper guide](../paper/README.md), then run `python package_paper.py`. Both source archives are extracted into clean directories and compiled independently. Their extracted PDF text must match the main PDF, including resolved citations and table numbers. Build logs are checked for missing references and overfull boxes.
 
-Visual checks cover figure legends, axis units and scale, table alignment, equation superscripts, the displayed finite-memory sum and the contents page. Table 4 is regenerated from the recorded network metrics. Its horizon labels are legitimate numbers; page headers retain normal pagination.
+Visual checks cover figure legends, axis units and scale, table alignment, equation superscripts, the displayed finite-memory sum and the contents page. Table 4 is regenerated from the recorded network metrics.
 
-American English is used in the manuscript prose. A local Webster-based American English dictionary is used for spelling review, with technical vocabulary, abbreviations, names and TeX fragments reviewed separately. Bibliographic titles preserve their published spelling.
-
-The [diagnostic guide](forecast_diagnostics.md) records the new statistical findings. No paired DM comparison against GJR rejects at 5%; one-session country-panel calibration rejects for all three models after Holm adjustment at both lag choices. These findings remain part of the manuscript.
+The [diagnostic guide](forecast_diagnostics.md) records the new statistical findings. No paired DM comparison against GJR rejects at 5%; one-session country-panel calibration rejects for all three models after Holm adjustment at both lag choices.

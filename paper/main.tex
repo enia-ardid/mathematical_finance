@@ -42,12 +42,11 @@ A Positive Fractional--Diffusive Volatility Model\par}
 \end{center}
 \vspace{0.5cm}
 \begin{abstract}
-We study how fractional memory and cross-asset diffusion can be combined in
-an interpretable conditional-variance model. A normalized finite fractional
-kernel controls the temporal profile; a positive correlation-graph resolvent
-controls spatial smoothing. We establish positivity, fixed-parameter moment
-stability and exact multi-step variance forecasts, and derive the effective
-memory of a persistent asymmetric extension. The empirical study covers the
+We develop a conditional-variance model that weights past squared shocks
+with a finite fractional kernel and pools them across assets through a
+positive correlation-graph resolvent. We derive its positivity and
+fixed-parameter moment properties, exact multi-step variance forecasts, and
+the effective memory of a persistent asymmetric extension. The empirical study covers the
 S\&P~500, eleven sector ETFs and eight country ETFs, with 186 origins per panel
 during 2023--2026 and horizons of 1, 5 and 21 observations. Persistence,
 asymmetry and multi-horizon selection improve the initial specification in all six US panel--horizon
@@ -60,9 +59,9 @@ has mixed value, and the ranking against weighted Network GARCH reverses
 between sectors and countries. Evaluation uses retrospective adjusted-price
 snapshots downloaded in October 2026; chronological row access does not
 reconstruct historical data availability.
-The contribution is a tractable fractional--diffusive family, an explicit
-account of its restrictions, and a reproducible comparison of their empirical
-costs and benefits.
+The shared temporal kernel and graph operator make the model's impulse
+response tractable, while the ablations show where these restrictions help
+or hinder forecasting.
 \end{abstract}
 \vspace{0.3cm}
 \textbf{Keywords:} fractional memory; conditional variance; graph diffusion;
@@ -77,12 +76,12 @@ sector ETFs; volatility forecasting; chronological validation.
 \clearpage
 
 \section{Introduction}
-How much of a volatility forecast should come from older shocks, and how much
-from shocks to related assets? We study these questions through a model with
-separate controls for temporal memory and cross-asset smoothing. The objective
-is a compact conditional-variance family whose restrictions are explicit
-enough to analyze and test. Forecast accuracy provides an empirical test of
-those restrictions.
+Volatility forecasts can draw on an asset's past shocks and on shocks to
+related assets. We combine these sources in a conditional-variance model
+with a fractional temporal filter and diffusion on a correlation graph.
+The two operators have separate parameters, so we can examine how the
+memory profile and cross-asset smoothing affect both the model's moments
+and its forecast errors.
 
 Fractional differencing \citep{hosking1981} and FIGARCH \citep{baillie1996}
 motivate the use of slowly decaying temporal weights. Our construction uses
@@ -107,8 +106,8 @@ signals are averaged, and feedback controls their overall contribution.
 An extension adds a persistent state and a larger response to negative
 innovations. We derive how the state changes the effective memory, so that
 the effect of persistence can be distinguished from the fractional profile.
-The shared temporal and spatial structure reduces flexibility relative to
-unrestricted lag matrices, but makes each restriction visible.
+Sharing the temporal profile and spatial operator across lags reduces the
+number of parameters relative to unrestricted lag matrices.
 
 \subsection{Position relative to network volatility models}
 Spatial ARCH permits conditional heteroskedasticity to depend on neighboring
@@ -127,18 +126,17 @@ reference, and Section~\ref{sec:network} adds the first-order Network GARCH
 recursion of \citet{zhou2020}, adapted to the available correlation networks.
 Network log-ARCH, threshold Network GARCH and DCC-GNGARCH remain outside the
 fitted comparison. The lag-matrix representation below places our model within
-restricted multivariate ARCH. The mathematical arguments establish the
-properties of this parameterization using positive-filter and graph
-arguments; network dependence and asymmetric responses are established
-ingredients.
+restricted multivariate ARCH. The proofs apply positive-filter and graph arguments to this
+parameterization; network dependence and asymmetric responses are
+established ingredients.
 
 \paragraph{Contributions.}
 We specify a positive fractional--diffusive variance family, establish its
 fixed-parameter moment properties and derive its effective memory and exact
 multi-step forecasts. We assess its restrictions through ablations, conventional
 and network benchmarks, forecast combination and calibration diagnostics.
-The accompanying code, tests, protocols and saved comparisons make this
-sequence auditable; exact reproduction requires the retained price snapshots.
+The implementation and reproduction instructions are given in Appendix~A.
+Exact numerical reproduction requires the retained price snapshots.
 
 \paragraph{Roadmap.}
 Sections~2--6 define and evaluate the initial specification;
@@ -414,8 +412,7 @@ variance remains constant under its own update equation.
 \item \textbf{GARCH(1,1):} independent asset models estimated by Gaussian
 quasi-maximum likelihood \citep{bollerslev1986}. Positivity is imposed and
 $\alpha+\beta<0.999$. Two fixed initializations are used; all 456 selected
-asset-level fits report convergence in this run. No benchmark fit is replaced
-silently by a weaker model.
+asset-level fits report convergence.
 \item \textbf{Fractional only:} the proposed kernel and feedback with $\tau=0$,
 with its own validation-selected $d$ and $\eta$.
 \item \textbf{Exponential plus graph:} replace the fractional average by EWMA
@@ -479,7 +476,6 @@ EWMA at every panel--horizon combination. The one-session differences are
 $-0.18834$ for the index and $-0.07899$ for sectors. GARCH has lower
 mean QLIKE in all six cases. For sectors, the proposed method's excess losses
 relative to GARCH are 0.01084, 0.01287 and 0.01752 across the three horizons.
-The gain over EWMA therefore does not carry over to the fitted GARCH reference.
 
 \begin{figure}[tbp]
 \centering\includegraphics[width=\textwidth]{figures/forecast_comparison.pdf}
@@ -522,13 +518,12 @@ Average improvements are not uniform over calendar years. For the index, the
 proposed method loses to EWMA at all horizons in 2023, wins at all horizons in
 2024 and 2026, and has mixed results in 2025. For sectors, it loses at all
 horizons in 2023 and improves on EWMA in the later years. The 2025 index
-one-session difference of $-0.5367$ materially influences the pooled average;
-the pooled result therefore depends materially on this period.
+one-session difference of $-0.5367$ contributes substantially to the pooled
+advantage over EWMA.
 
-Figure~\ref{fig:paths} shows how forecasts respond to changing fluctuation
-levels. The numerical losses measure the errors behind that visual comparison.
-Origin-level local outputs retain every asset's losses; the manuscript bundle
-includes the aggregate annual tables.
+Figure~\ref{fig:paths} shows the corresponding forecast paths.
+Asset-level losses are retained in the local origin records, and aggregate
+annual scores are included in the manuscript bundle.
 
 \section{Persistence and asymmetric innovations}
 \label{sec:refinement}
@@ -691,12 +686,11 @@ assets. This experiment tests transfer to another asset universe on the
 same historical period; it does not supply independent or prospective
 confirmation.
 
-A computational amendment is recorded in the accompanying protocol files.
-The first attempt reached the
-FIGARCH forecast and failed because a strided panel column was not C-contiguous.
-The correction copies input arrays to the required layout. It changes no
-model or evaluation rule; no FIGARCH comparison results existed at that point.
-The original protocol and failed-run record are retained.
+The protocol amendment records an array-layout correction required by the
+FIGARCH implementation. Strided panel columns are copied to C-contiguous
+arrays before forecasting. This correction preceded the FIGARCH comparison
+results and left the model and evaluation rules unchanged; both the original
+protocol and amendment are retained.
 
 \subsection{Additional forecaster and fractional benchmark}
 We also evaluate a fixed combination of variance forecasts:
@@ -896,19 +890,15 @@ not be interpreted as pointwise reproduction of the realized fluctuations.
 \section{Interpretation, limitations and conclusions}
 \subsection{What the restrictions explain}
 \textbf{Theoretical contribution.}
-A shared positive graph resolvent turns a fractional temporal filter into an
-analyzable family of multivariate variance recursions. Every lag shares that
-resolvent and a
-common temporal profile. This restriction makes the impulse response and
-fixed-parameter moment behavior tractable, at the cost of ruling out
-asset-specific lag shapes and more general network dynamics. The effective
-kernel identifies precisely what persistence adds: geometric smoothing of
-a finite fractional profile.
+The model restricts multivariate variance lag matrices to a common positive
+graph resolvent and a shared fractional profile. This structure yields an
+explicit impulse response and fixed-parameter moment bounds. It excludes
+asset-specific lag shapes and lag-dependent network geometry. The persistent
+state smooths the finite fractional profile geometrically, producing an
+infinite exponential tail when its coefficient is positive.
 
 \textbf{Empirical contribution.}
-The recorded comparisons identify which restrictions improve average loss
-and where they fail. The empirical results support some choices more clearly than
-others. Adding persistence, asymmetry and multi-horizon selection reduces
+Adding persistence, asymmetry and multi-horizon selection reduces
 loss relative to the initial model in all six US comparisons. Diffusion
 and the fractional profile have less consistent effects across horizons
 and panels. The weighted Network GARCH benchmark has lower loss on sectors
@@ -920,9 +910,7 @@ fractional model and FIGARCH in all nine panel--horizon comparisons.
 Against GJR alone, the combination has lower loss in only three. All nine
 nominal 95\% paired intervals contain zero with both five- and ten-origin
 blocks. These comparisons establish neither an advantage over GJR nor
-equivalent predictive performance. The improvement over the fractional
-component does not, by itself, show that this component adds value to GJR.
-The additional DM tests leave the GJR comparisons unresolved, and calibration
+equivalent predictive performance. The DM tests also leave the GJR comparisons unresolved. Calibration
 regressions identify a one-session country-panel departure from the joint
 intercept-zero, slope-one null for all three examined models, including GJR
 (Appendix~\ref{app:diagnostics}). Table~\ref{tab:findings} collects the main findings.
@@ -937,12 +925,11 @@ sample; inferential qualifications follow Section~6.1.}
 
 \subsection{Data vintages and prospective evaluation}
 \label{sec:vintages}
-Chronological fitting and historical data availability are separate
-requirements. The experiments enforce the first within fixed downloads.
-They cannot reconstruct the price versions that a forecaster would have
-seen at the historical origins.
+At every origin, fitting uses only rows through that origin in the retained download.
+The download itself is retrospective: it does not recover the price version
+available at each historical forecast date.
 
-The effect of a revision can be stated exactly. For one asset, let
+To examine the effect of changing data vintages, let
 $P_t^{(T)}$ and $P_t^{(T^{\prime})}$ be prices for date $t$ from two download
 vintages, and set $a_t=P_t^{(T^{\prime})}/P_t^{(T)}>0$. Their log-returns satisfy
 \begin{equation}
@@ -958,14 +945,12 @@ or to a historical close. The data interface documents missing dividend
 and split adjustments and price corrections \citep{yfinance_repair};
 this establishes possible mechanisms, not their occurrence in our panels.
 
-A changed return can affect the fitting mean and scale, graph estimates,
-validation choices and subsequent forecasts. If it belongs to a target
-window, it also changes the realized proxy and loss. Such changes need not
-favor the proposed model: their direction and size require a comparison
-of actual vintages. Only one download vintage per panel is retained here,
-so the study cannot measure this effect or remove it by a retrospective
-correction. The input hashes identify the evaluated data, not historical
-availability.
+A changed return can affect fitted means, scales, graphs and validation
+choices, as well as subsequent forecasts. Within a target window it also
+changes the realized proxy and loss. Measuring the direction and size of
+these effects requires multiple data vintages. We retain one vintage per
+panel, identified by its input hashes, so this sensitivity cannot be
+measured in the present study.
 
 A prospective extension would freeze the model code, universe, refit
 rules, horizons, loss and observation schedule before collecting new
@@ -978,21 +963,18 @@ fixed collection period, regardless of the observed ranking. No such
 prospective run is included in the present results.
 
 \subsection{Scope and reproducibility}
-The contribution is a constrained fractional--diffusive family with explicit
-mathematical properties and a documented empirical assessment. The positive
-floor and graph contraction control the recursion; forecast accuracy still
-depends on whether its shared structure suits the data. Daily squared-return
+The positive variance floor and graph contraction constrain the recursion,
+but the forecast comparisons show that its shared structure does not help
+equally across panels and horizons. Daily squared-return
 targets are noisy, the conditional mean is constant within each fit, and
 the selected universes cover overlapping market shocks.
 
-The repository records the equations in executable form, tests their numerical
-properties, and preserves the protocols and comparisons behind the reported
-findings. This supports inspection and reproduction subject to access to
-the recorded inputs. Richer volatility measurements, prospective observations
-and fitted comparisons with network log-ARCH, threshold Network GARCH and
-dynamic-covariance models would address the remaining empirical questions.
-The current evidence establishes an analyzable specification and mixed
-benefits from its restrictions, with no demonstrated superiority over GJR.
+The implementation, tests and experiment records allow the results to be
+checked against the stated equations, given access to the retained inputs.
+Further evaluation would require richer volatility measurements and
+prospectively collected observations. Comparisons with network log-ARCH,
+threshold Network GARCH and dynamic-covariance models would test additional
+forms of temporal and cross-asset dependence.
 
 \appendix
 \section{Implementation and reproduction}
@@ -1029,24 +1011,17 @@ no imposed time-varying volatility or fractional mechanism. It is an offline
 execution example, not empirical evidence for the proposed model. The market
 snapshot download command and adjustment convention are documented in the data
 guide. External-study commands and source-package instructions are in
-\path{paper/README.md}. The build uses ordinary \LaTeX{} article typography, numbered equations,
-a contents page and running headers, preserving the presentation of the
-original project report.
+\path{paper/README.md}.
 
-The combined suite contains 66 tests on Python 3.12 under macOS, including
-Network GARCH gradient checks, conditional-moment simulation comparisons,
-asset relabeling and future-price perturbations.
-Checks cover fractional weights, graph positivity and contraction, asset
-relabeling, GARCH/GJR filtering, exact moments against Monte Carlo, asymmetric
-normalization and validation forecasts against individually truncated histories.
-Future-price perturbations verify that changing unobserved observations cannot
-alter earlier variances, selected parameters or graphs. Additional checks cover
-FIGARCH library equivalence on strided panel inputs, matched ensemble scoring
-and the effective-memory impulse response. Numerical checks support implementation
-fidelity; mathematical claims rest on their stated assumptions and proofs.
-The five additional diagnostic tests compare HAC calculations and calibration
-regressions with an independent implementation, check multiplicity correction,
-and test paired-key integrity and degenerate cases.
+The suite contains 66 tests on Python 3.12 under macOS. They check fractional
+weights, graph positivity and contraction, asset relabeling, GARCH/GJR
+filtering, Network GARCH gradients and the effective-memory impulse response.
+Conditional moments are compared with Monte Carlo simulation, and validation
+forecasts with fits on individually truncated histories. Perturbing future
+prices must leave earlier variances, parameter choices and graphs unchanged.
+Other tests cover FIGARCH library agreement, ensemble scoring, HAC and
+calibration calculations, multiplicity correction, paired-key integrity and
+degenerate inputs.
 
 The presentation command \path{render_submission_assets.py} regenerates all
 eleven figures and the numerical tables from saved records, without refitting
@@ -1123,12 +1098,12 @@ proxy; the plots do not imply prediction of the underlying ETF price direction.}
 \clearpage
 \section{Additional forecast diagnostics}
 \label{app:diagnostics}
-These diagnostics use forecast records whose earlier results had already been inspected.
-The locally recorded protocol fixes the comparisons and inference rules before
-calculation. A computational amendment changes only the tolerance for checking
-QLIKE reconstructed from saved decimal CSVs, from $10^{-12}$ to $10^{-10}$;
-the initial attempt stopped before producing diagnostic results. The tests use
-the original stored losses. No forecast is refitted or recalibrated.
+The diagnostics use the saved forecasts and are exploratory, since the
+earlier results were already known. Their protocol fixed the comparisons
+and inference rules before calculation. An amendment increased the tolerance
+for checking QLIKE reconstructed from decimal CSVs from $10^{-12}$ to
+$10^{-10}$, before any diagnostic results were produced. The tests use the
+original stored losses, without refitting or recalibrating forecasts.
 
 \subsection{Paired predictive accuracy}
 For each panel and horizon, let $d_o$ be the asset-average QLIKE difference

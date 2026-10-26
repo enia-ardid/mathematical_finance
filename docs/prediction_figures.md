@@ -4,7 +4,7 @@ The paper includes the full recorded time paths, alongside the aggregate loss ta
 
 ## Reading Figure 2
 
-The figure displays **actual mean normalized QLIKE**, with one dot and a four-decimal label for every model, including EWMA in orange. Its six panels cover the index and sector panel at horizons of 1, 5 and 21 observations, on a common horizontal scale. Lower scores are better. Values match the initial-study table exactly; no absolute values, sign reversals or score transformations have been introduced.
+The figure displays **actual mean normalized QLIKE**, with one dot and a four-decimal label for every model, including EWMA in orange. Its six panels cover the index and sector panel at horizons of 1, 5 and 21 observations, on a common horizontal scale. Lower scores are better. Values match the initial-study table.
 
 ![Direct QLIKE comparison, including EWMA](../paper/figures/forecast_comparison.png)
 

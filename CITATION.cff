@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this code or research draft, please cite this project and identify the Git commit used."
+message: "If you use this code or manuscript, please cite this project and identify the Git commit used."
 type: software
 title: "ETF simulation with temporal memory"
 authors:

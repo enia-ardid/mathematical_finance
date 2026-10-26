@@ -2,14 +2,14 @@
 
 This page describes the first variance specification and its preserved results. The later [persistent asymmetric refinement](refinement.md) improves its pooled scores at all six evaluated panel–horizon combinations and is included in the updated manuscript.
 
-The revised [manuscript](../paper/main.tex) preserves the project's two central ideas while correcting their mathematical role. It models conditional variance directly. The earlier simulator and forecast heads are retained in their own modules; the new implementation is [fractional_diffusion.py](../fractional_diffusion.py).
+The [manuscript](../paper/main.tex) applies fractional memory and graph diffusion to conditional variance. [fractional_diffusion.py](../fractional_diffusion.py) implements this specification; the earlier return simulator and price-forecast layers are separate modules.
 
 For log-returns $r_t$, a fitted mean $\mu$ and positive fitted asset scales $s_j^2$, define $z_{t,j}=(r_{t,j}-\mu_j)^2/s_j^2$. The normalized finite fractional-integral kernel is
 
 $$g_0(d)=1,\qquad g_k(d)=\frac{k-1+d}{k}g_{k-1}(d),\qquad
 p_k(d)=\frac{g_k(d)}{\sum_{v=0}^{M-1}g_v(d)},\quad 0<d\le1.$$
 
-These positive coefficients come from $(1-B)^{-d}$, with $M=252$ in the experiment. They are fractional-integral weights; the code does not reinterpret the old signed return convolution as a valid fractional derivative. Finite truncation does not establish infinite-range dependence.
+These positive coefficients come from $(1-B)^{-d}$, with $M=252$ in the experiment. Truncating these fractional-integral weights gives a finite memory window rather than asymptotic long-range dependence.
 
 Let $L$ be a symmetric graph Laplacian fitted from past shrinkage correlations. The implicit diffusion operator and conditional variance are
 
@@ -18,7 +18,7 @@ v_t=s^2\odot\left[(1-\eta)\mathbf1+
 \eta A_\tau\sum_{k=0}^{M-1}p_k(d)z_{t-1-k}\right],
 \qquad 0\le\eta<1,\quad\tau\ge0.$$
 
-The graph operator is nonnegative and doubly stochastic, preserves constants and contracts graph energy. Consequently, $v_{t,j}\ge(1-\eta)s_j^2$. For fixed parameters and temporally iid unit-second-moment innovations, the squared-return recursion admits a causal stationary solution with finite first moments, hence finite second moments for returns. The paper supplies the coupling proof and distinguishes it from claims about fourth moments, rolling-fit stationarity or predictive accuracy.
+The graph operator is nonnegative and doubly stochastic, preserves constants and contracts graph energy. These properties give $v_{t,j}\ge(1-\eta)s_j^2$. For fixed parameters and temporally iid unit-second-moment innovations, the squared-return recursion admits a causal stationary solution with finite first moments, hence finite second moments for returns. The paper supplies the coupling proof and distinguishes it from claims about fourth moments, rolling-fit stationarity or predictive accuracy.
 
 Multi-step expected variances follow by replacing future squared innovations with their recursively computed conditional expectations. Gaussian-innovation simulation is also available. The empirical target is a sum of subsequent daily squared returns centered at the common origin-fitted mean, not intraday realized variance or directional price prediction.
 
@@ -29,4 +29,4 @@ python run_paper.py --synthetic --output artifacts/paper-synthetic
 python run_paper.py --data-dir artifacts/yahoo-through-2026-10-16 --output artifacts/paper-study --publish-assets
 ```
 
-All historical windows were already available in the project. The new protocol prevents per-origin look-ahead and records the finite candidate set; it does not make this a prospective test or establish independent confirmation. Publication claims must follow the measured results and the stated mathematical assumptions.
+All historical windows were already available in the project. The protocol fixes the candidate set and restricts each forecast to rows available at its origin. Since the study reuses historical data, it remains a retrospective evaluation.

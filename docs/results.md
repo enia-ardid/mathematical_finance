@@ -2,13 +2,13 @@
 
 The subsequent [adaptive-model evaluation](adaptive_results.md) reports 186 rolling origins over 2023–2026, a no-memory ablation, empirical uncertainty intervals and latest-forecast issuance. The results below remain the record of the earlier workflows.
 
-These results use Python 3.12.10 and the dependencies in `requirements.txt`. The 17 October forecast extension preserves the core simulator from the 16 October review. Its rolling forecasts and the earlier single-origin simulations are different tasks, recorded separately below.
+These results use Python 3.12.10 and the dependencies in `requirements.txt`. The forecast experiment uses the same core recurrence as the simulation study. Its rolling forecasts and the earlier single-origin simulations are different tasks, recorded separately below.
 
 ## Rolling forecasts: January–October 2026
 
 The [forecast protocol](results/forecast_protocol.json) was recorded before inspecting this newly downloaded test period. It fixes horizons, origin spacing, refit spacing, the coupling grid and the calibration rule. This is a working protocol record, not a formal preregistration or a prospective trading trial. No choices were changed in response to the test scores.
 
-The new Yahoo Finance snapshot was downloaded on **2026-10-17**, requesting 2018-01-01 through 2026-10-17 (exclusive). It contains 2,210 price dates before alignment. Common history begins on **2018-06-19** and ends on **2026-10-16**. Development ends on **2026-01-02**; the first permissible test target is **2026-01-05**. This period follows both datasets examined in the earlier review, although all adjusted prices come from a retrospective snapshot.
+The new Yahoo Finance snapshot was downloaded on **2026-10-17**, requesting 2018-01-01 through 2026-10-17 (exclusive). It contains 2,210 price dates before alignment. Common history begins on **2018-06-19** and ends on **2026-10-16**. Development ends on **2026-01-02**; the first permissible test target is **2026-01-05**. The target period follows the end dates of the two original datasets; all adjusted prices come from a retrospective snapshot.
 
 Internal validation uses 36 expanding origins. The outer test also contains **36 origins**, from 2026-01-02 through 2026-09-15, with targets through 2026-10-14 and eight parameter refits. Origins advance every five observations and all horizons share the same origins. The last incomplete forecast blocks are excluded. Earlier test observations become available to later forecasts, while calibration weights and coupling scales remain frozen.
 
@@ -41,7 +41,7 @@ python run_experiment.py --mode forecast --synthetic --output artifacts/demo
 
 The maintained notebook runs this same forecast workflow on 500 synthetic business-date prices generated with seed 17. The inputs have a common Gaussian component and independent sector components, with no imposed long-memory mechanism. They verify execution and make the example available offline; their scores are not evidence of market forecasting skill.
 
-## Retained simulation experiments — 16 October review
+## Simulation experiments
 
 The following results use the earlier multi-year continuation from one training origin, with training-only drift and scale calibration. They do not use later observed returns. The command-line default remains `--mode simulation` for compatibility. Seeds, coupling-grid candidates and split fractions were not adjusted after inspecting these held-out results.
 
@@ -98,10 +98,10 @@ python run_experiment.py --data-dir /path/to/data_finance --output artifacts/loc
 
 ## Historical outputs
 
-The stored pre-review final notebook reports index test R² `0.8163` and a single-path ETF reconstruction score `0.7481`. These are historical outputs, not results of the corrected code. The original market snapshot is not available in the repository, the sector pipeline had test leakage, and the reconstruction score includes training dates. See [scientific_review.md](scientific_review.md) for the exact discrepancies. The historical beta also contains mixed execution states and is not used to validate the maintained implementation.
+The original notebook at commit `9194bfb` reports index test R² `0.8163` and a single-path ETF reconstruction score `0.7481`. These are historical outputs, not results of the corrected code. The original market snapshot is not available in the repository, the sector pipeline had test leakage, and the reconstruction score includes training dates. See [original-model notes](legacy_model_notes.md) for the exact discrepancies. The historical beta also contains mixed execution states and is not used to validate the maintained implementation.
 
 ## What was checked
 
-The 25 tests cover training/test independence, future-price perturbations, deterministic estimation, conditional means and variances, the binomial weights and recurrence/PDE distinction, reflected boundaries, return-date alignment, missing-price rejection, sMAPE, baseline anchoring and capital-weighted portfolio invariance. The simulation CLI completed synthetic, supplied-CSV and Yahoo runs; the forecast CLI completed synthetic and 2026 Yahoo runs. The maintained notebook executed from a fresh kernel with no cell errors and exported to HTML. `pip check` found no broken dependency requirements in the isolated Python 3.12 environment. Installation and execution were checked on macOS; other platforms were not tested.
+The simulation and price-forecast tests cover training/test independence, future-price perturbations, deterministic estimation, conditional means and variances, the binomial weights and recurrence/PDE distinction, reflected boundaries, return-date alignment, missing-price rejection, sMAPE, baseline anchoring and capital-weighted portfolio invariance. The simulation CLI completed synthetic, original local-data and Yahoo runs; the forecast CLI completed synthetic and 2026 Yahoo runs. The maintained notebook executed from a fresh kernel with no cell errors and exported to HTML. `pip check` found no broken dependency requirements in the isolated Python 3.12 environment. Installation and execution were checked on macOS; other platforms were not tested.
 
 These checks establish the stated implementation behavior. They do not prove model stability, a continuous-time limit, market-data provenance, statistical significance or profitable trading.

@@ -2,7 +2,7 @@
 
 The project simulates daily log-returns of the S&P 500 index and eleven sector ETFs. The core recurrence and the original simulation experiment remain available through `--mode simulation`. This page describes that retained experiment. The [forecasting workflow](forecasting.md) uses the same core with observed history, exact conditional moments and validation-based calibration; its equations and evaluation protocol are documented separately.
 
-The core does **not** implement a verified fractional Black–Scholes equation or estimate a time-varying volatility process. The distinction matters: the derivation in the accompanying report does not yield the implemented update. See the [scientific review](scientific_review.md).
+The core does **not** implement a verified fractional Black–Scholes equation or estimate a time-varying volatility process. The distinction matters: the derivation in the accompanying report does not yield the implemented update. See the [original-model notes](legacy_model_notes.md).
 
 ## Data and chronological split
 
@@ -27,7 +27,7 @@ Sector order comes from average linkage on training correlation distances `1 - �
 
 Coupling candidates are zero, half and all of `κ_base = 0.5 * max(0, tanh(mean(atanh(ρ))))`, using off-diagonal training correlations clipped just inside ±1. Selection minimizes training price RMSE over five seeds. This retains the notebook's training criterion, including its dependence on ETF price units; it is not validation-based tuning or a causal estimate of contagion. The fit is evaluated once on held-out data.
 
-The index model retains the retrospective training scenario of 20 February–30 April 2020 (`μ × .8`, `σ × 4`). Sectors retain the final notebook's default of no COVID adjustment. The index adjustment is applied only to training dates. It is not a forecast of the event and does not affect the supplied 2021–2026 CSV experiment.
+The index model retains the retrospective training scenario of 20 February–30 April 2020 (`μ × .8`, `σ × 4`). Sectors retain the final notebook's default of no COVID adjustment. The index adjustment is applied only to training dates. It is not a forecast of the event and does not affect the original local 2021–2026 dataset.
 
 ## Price calibration and evaluation
 

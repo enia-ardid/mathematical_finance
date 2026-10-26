@@ -15,7 +15,7 @@ data_finance/
 
 The first CSV has columns `Date,SP500`. The second has `Date,XLB,XLE,XLF,XLI,XLK,XLP,XLRE,XLU,XLV,XLY,XLC`; column order may vary. Dates must be unique and increasing, and observed prices must be finite and positive. Use prices with a documented, consistent adjustment convention. The loader trims leading sector inception gaps, aligns observed dates and recomputes log-returns from raw prices. It does not use existing `processed/` files.
 
-The private files supplied for the October 2026 review contain 1,255 prices per asset from **2021-01-05 to 2026-01-02**, with all eleven sectors and no missing values or duplicate dates. Their 1,254 stored log-returns agree with log differences of the raw prices to approximately `2e-15`. The owner recalls a public web source but not the provider. The adjustment convention and download date are unknown. This is internal arithmetic consistency, not independent verification of the market observations. The files remain outside the published repository; checksums accompany the [local execution record](results.md).
+The original local data files contain 1,255 prices per asset from **2021-01-05 to 2026-01-02**, with all eleven sectors and no missing values or duplicate dates. Their 1,254 stored log-returns agree with log differences of the raw prices to approximately `2e-15`. Their provider, adjustment convention and download date are undocumented. The return check establishes arithmetic consistency only; the market observations could not be independently verified. The files remain outside the published repository; checksums accompany the [local execution record](results.md).
 
 ## Obtain a new documented snapshot
 

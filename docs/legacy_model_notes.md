@@ -1,10 +1,10 @@
-# Review of the accompanying report
+# Notes on the original return model
 
-Reviewed against the supplied **ETFs Simulation with Temporal Memory: A Fractional-Diffusive Approach**, Enia Ardid and Pablo Casado de Amezúa, dated 14 October 2026, and the notebooks at commit `9194bfbbb354dc9ecc331b932c5968005c4cccc8`. PDF SHA-256: `d78a5d707833d831b5c3e45b691083c58471e183cc120fcb8e6af0c864758b21`. A filename containing “ArXiv” does not establish publication or an arXiv identifier. The PDF is not redistributed here.
+The original return recurrence and its numerical outputs are documented in *ETFs Simulation with Temporal Memory: A Fractional-Diffusive Approach* (14 October 2026) and the notebooks at commit `9194bfbbb354dc9ecc331b932c5968005c4cccc8`. The report's SHA-256 is `d78a5d707833d831b5c3e45b691083c58471e183cc120fcb8e6af0c864758b21`; the file is not redistributed here.
 
-The repository can support an exploratory discrete simulation study. The supplied manuscript needs scientific revision before it can support its stated claims about a fractional PDE, convergence, volatility modeling or predictive validation.
+These notes describe the mathematical discrepancies, implementation corrections and interpretation of the historical results. The conditional-variance model in the current manuscript is defined separately in [fractional_diffusion.md](fractional_diffusion.md) and [refinement.md](refinement.md).
 
-## Mathematical issues requiring revision
+## Discrete recurrence and continuous-time interpretation
 
 **Equations (9) and (17) do not describe the same discretization.** From the report's finite GL sum,
 
@@ -24,7 +24,7 @@ For geometric Brownian motion, Itô's formula gives
 
 $$d\log P=\left(\mu-\frac{\sigma^2}{2}\right)dt+\sigma\,dW.$$
 
-A fractional derivative does not inherit the ordinary logarithmic chain rule. Passing from a log-price equation to a log-return equation also changes the forcing and initial conditions. Equations (15)–(16) therefore cannot be asserted as consequences of (7). The maintained model should start directly from the discrete return recurrence. See the standard [Black–Scholes derivation](https://www.columbia.edu/~yao/bsnotes04b.pdf) for the classical case.
+A fractional derivative does not inherit the ordinary logarithmic chain rule. Passing from a log-price equation to a log-return equation also changes the forcing and initial conditions. Equations (15)–(16) therefore cannot be asserted as consequences of (7). The maintained implementation therefore starts from the discrete return recurrence. See the standard [Black–Scholes derivation](https://www.columbia.edu/~yao/bsnotes04b.pdf) for the classical case.
 
 **The Black–Scholes PDE in (5) uses the wrong squared variable.** With option value $V$, underlying price $S$ and risk-free rate $r_f$, the classical equation is
 
@@ -42,11 +42,11 @@ The diffusion coefficient contains $S^2$, not $V^2$. Its pricing measure and ter
 
 **Several qualitative statements exceed the model.** Gaussian forcing with fixed coefficients does not establish heavy tails or volatility clustering. A change of parameters over a date interval is not a Dirac impulse. Correlation is not causal contagion. ARIMA models can encode temporal dependence; describing them as having no memory is too broad. The code simulates returns and prices, not a separately estimated volatility process.
 
-## Demonstrable implementation and reporting errors
+## Implementation corrections
 
 | Original issue | Resolution and effect |
 | --- | --- |
-| Sector drift correction targets `prices_win_df.iloc[split_idx]`, the first test price | All calibration functions now accept training prices only; last training price is the endpoint. Sector results must be regenerated. |
+| Sector drift correction targets `prices_win_df.iloc[split_idx]`, the first test price | All calibration functions now accept training prices only; last training price is the endpoint. The recorded sector experiments use this correction. |
 | Sector ordering and coupling-grid scale use full-sample correlations | Both are estimated inside the training-only fit. Changing test prices cannot alter either choice. |
 | Implicit `pct_change()` filling can introduce false zero returns | Returns are recomputed from validated positive prices with log differences. Interior missing values fail explicitly. |
 | Unseeded Hurst RANSAC can change α between runs | Fixed estimation seed, with caller RNG restored; simulation seeds remain separate. |
@@ -57,18 +57,16 @@ The diffusion coefficient contains $S^2$, not $V^2$. Its pricing measure and ter
 
 The beta notebook additionally omits XLP, hard-codes 1,644 dates and arrays of length ten, mixes dates when integrating prices, uses full-sample fits, and contains outputs from different execution states. It is retained as a labeled historical artifact, not a supported runnable analysis.
 
-## Historical numbers cannot be promoted as current evidence
+## Interpretation of historical scores
 
 The report's index `R² ≈ 0.82` is the score of an averaged price path, not an average of per-seed R² scores with uncertainty. Table 1 labels approximately `0.85` as training R², but the final notebook's stored table reports `0.6755` for training and `0.8507` over the full sample. Table 1 includes κ even though the direct index simulator has no sector coupling. The reconstruction score near `0.7481` compares real and simulated ETF baskets over aligned **all-sample** dates, not held-out predictions of the actual index.
 
-The report says SPY, while the code downloads `^GSPC`; these are different instruments. It also refers to ten sectors and Ward linkage, while the final notebook uses eleven sectors and average linkage on correlation distances. The stated COVID multipliers differ from the final index notebook, and the final sector simulation disables the COVID scenario. These differences must be reconciled rather than combining the beta and final methods into a single account.
+The report says SPY, while the code downloads `^GSPC`; these are different instruments. It also refers to ten sectors and Ward linkage, while the final notebook uses eleven sectors and average linkage on correlation distances. The stated COVID multipliers differ from the final index notebook, and the final sector simulation disables the COVID scenario. The beta and final notebooks therefore represent different specifications.
 
 The local CSVs cover 2021–2026, not the report's period. Their provider and price-adjustment convention could not be recovered. New runs on those files check execution but cannot reproduce or independently substantiate the historical claims. A separate new Yahoo Finance download approximately recovers the index score (R² 0.8164), while the corrected sector reconstruction performs poorly; see the [execution record](results.md). This is a new experiment with recorded provenance, not an exact reproduction of the original snapshot or a validation of the derivation.
 
-## Suggested replacement framing
+## Relation to the variance model
 
-**Title:** *Exploring temporal-memory recurrences for S&P 500 and sector ETF price simulations.*
+The price-forecast experiments use the discrete recurrence directly, with observed history, conditional moments and chronological calibration. The [variance model](fractional_diffusion.md) instead applies positive fractional-integral weights to squared innovations and smooths them over an estimated correlation graph. Its equations and moment arguments are independent of the original pricing-PDE derivation.
 
-**Abstract:** This project studies a discrete stochastic model of daily log-returns, using Grünwald–Letnikov binomial coefficients as history weights and a nearest-neighbor coupling between sector ETFs. Parameters and a correlation-based sector ordering are estimated on a chronological training segment. Simulated price paths receive training-only drift and scale calibration before comparison with held-out observations and simple price baselines. The recurrence is a modeling heuristic rather than a verified discretization of a fractional Black–Scholes equation. A revised implementation fixes data leakage, date alignment and portfolio aggregation, and provides deterministic synthetic examples and an explicit local-data workflow. The experiments illustrate the behavior and limitations of the model; they do not establish predictive superiority, a continuous-time limit or trading profitability.
-
-Before a new manuscript submission, replace the unsupported derivation and convergence statements, identify and retain the exact market-data snapshot, rerun all tables and figures, and reconcile the evaluation definitions. The 17 October extension now provides a separate [rolling-origin forecast evaluation](forecasting.md), with internal validation and a newly downloaded 2026 test period. Its small gains over simple references and frequent selection of zero memory weight do not establish general predictive superiority, and do not repair the mathematical derivation. Reference [6], attributed to Klimov and Herrmann, was not located by exact-title/author search; verify its bibliographic record or replace it with a checked source. Do not treat that search result as proof the reference does not exist.
+The original report's reference [6], attributed to Klimov and Herrmann, could not be verified by exact-title and author searches. It is not used in the current manuscript. An unsuccessful search does not establish that the reference does not exist.

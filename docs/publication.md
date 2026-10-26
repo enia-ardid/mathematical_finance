@@ -8,4 +8,4 @@ The [LaTeX package](../paper/latex-source.zip) includes the manuscript dependenc
 
 Use [CITATION.cff](../CITATION.cff) and identify the Git commit when citing the project. No reuse license has been selected. Repository visibility does not itself grant a software or manuscript license.
 
-Raw CSVs, local environments, caches and execution artifacts are excluded from the repository. Historical notebook outputs may contain local filesystem paths; Git history has not been rewritten. The maintained notebook uses synthetic examples and has personal paths removed from saved text outputs. The original supplied report remains outside this repository.
+Raw CSVs, local environments, caches and execution artifacts are excluded from the repository. The maintained notebook contains executed synthetic examples. The beta notebook documents the earlier implementation and is not used for the manuscript results.

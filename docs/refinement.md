@@ -21,7 +21,7 @@ The initialization uses unit normalized variance and unit transformed squared in
 $$e_t\le b e_{t-1}+(1-b)\eta\sum_{k=0}^{M-1}p_k e_{t-1-k},
 \qquad b+(1-b)\eta<1.$$
 
-Thus the finite-state recursion has a unique causal stationary solution with finite first moments for normalized variance, $E[h_t]=\mathbf1$, and return variance $s_j^2$. These are model properties under the stated assumptions, not guarantees for rolling estimates or observed markets. The finite fractional window and recursive exponential persistence do not establish asymptotic long-range dependence.
+The contraction gives a unique causal stationary solution with finite first moments for normalized variance, $E[h_t]=\mathbf1$, and return variance $s_j^2$. These are model properties under the stated assumptions, not guarantees for rolling estimates or observed markets. The finite fractional window and recursive exponential persistence do not establish asymptotic long-range dependence.
 
 Multi-step expected variances use the same recursion with future $x$ replaced by its conditional expectation. The implementation computes these moments exactly under the fitted model. Monte Carlo tests check this calculation against pathwise asymmetric simulations.
 
@@ -50,13 +50,13 @@ The follow-up uses the same 186 origins, assets, target convention and snapshot 
 | Sectors | 5 | 0.56274 | 0.54779 | 0.54987 | 0.54007 |
 | Sectors | 21 | 0.61963 | 0.60432 | 0.60211 | 0.59305 |
 
-The refinement improves on the earlier fractional model in all six pooled comparisons and on symmetric GARCH in four. GJR-GARCH has the lowest loss of these four models in all six cases. This is an improvement to the fractional model, not evidence that it is the strongest available volatility predictor.
+The refinement improves on the earlier fractional model in all six pooled comparisons and on symmetric GARCH in four. GJR-GARCH has the lowest loss of these four models in all six cases.
 
 With ten-origin blocks, nominal 95% ranges for the improvement relative to the earlier fractional model exclude zero in five of six comparisons. The exception is one-session sector forecasting. All ranges comparing the refined model with GARCH include zero. These ranges are descriptive: the same history informed the follow-up and there is no correction for the sequence of research decisions.
 
 Asymmetry is selected at all 38 index refits and 35 of 38 sector refits. A nonzero persistence parameter is selected at every refit. Nonzero diffusion is selected at 18 of 38 sector refits, and the graph ablation remains close: graph diffusion modestly helps the one-session sector average, slightly hurts the five-session average and has little effect at 21 sessions. Improvements are not uniform by year: the index deteriorates at 21 sessions in 2024, while sectors deteriorate at 5/21 sessions in 2024 and one session in 2025 relative to the earlier fractional model.
 
-All 456 selected GJR fits report convergence. The offline synthetic run also completes. The combined suite has 49 passing tests, including validation forecasts checked against separate truncated-history forecasts, asymmetric moment normalization, simulation agreement and future-price perturbations.
+All 456 selected GJR fits report convergence. The offline synthetic run also completes. The tests include validation forecasts checked against separate truncated-history forecasts, asymmetric moment normalization, simulation agreement and future-price perturbations.
 
 ## Reproduce
 

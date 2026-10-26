@@ -1,8 +1,8 @@
 # Research manuscript
 
-`main.tex` is the English research manuscript; `main.pdf` is the compiled manuscript. The source follows the original report's A4, 12-point Latin Modern typography, title page, contents page, numbered equations, single-column text and running header. Figures and numerical tables are generated from the recorded experiment. `latex-source.zip` contains the LaTeX sources and figure/table dependencies for a conventional LaTeX installation or Overleaf.
+`main.tex` contains the manuscript and `main.pdf` the compiled document. The source uses A4 pages, 12-point Latin Modern type and numbered equations. Figures and tables are generated from saved experimental records. `latex-source.zip` contains the sources and dependencies for a conventional LaTeX installation or Overleaf.
 
-This is a **new variance-model specification preserving fractional memory and sector diffusion**, not a claim that the original return recurrence solved a fractional Black–Scholes equation. The earlier implementation remains available. The manuscript supplies proofs of positivity, graph contraction and fixed-parameter moment stability, and an effective-kernel derivation. It includes the first study, a [persistent asymmetric refinement](../docs/refinement.md), and an [external-universe extension](../docs/external_validation.md) with FIGARCH and a fixed forecast combination.
+The model combines **fractional memory and graph diffusion in conditional variance**. The manuscript proves positivity, graph contraction and fixed-parameter moment stability, and derives the effective kernel of the [persistent asymmetric specification](../docs/refinement.md). Experiments cover the initial model, its refinements, [country ETFs](../docs/external_validation.md), forecast combinations and network benchmarks.
 
 ## Build
 
@@ -13,11 +13,11 @@ cd paper
 tectonic --reruns 3 main.tex
 ```
 
-A conventional alternative is `latexmk -pdf main.tex`. The packages are standard LaTeX; BibTeX uses `references.bib`. Tectonic 0.15.0 was downloaded locally into the ignored `artifacts/paper-tools/` directory for this workspace, without adding a compiler binary to the repository. The first build can download fonts and packages.
+A conventional alternative is `latexmk -pdf main.tex`. The packages are standard LaTeX; BibTeX uses `references.bib`. The documented build uses Tectonic 0.15.0. Its first run may download fonts and packages.
 
 The fixed pass count avoids a [known bibliography rerun-detection issue in Tectonic 0.15](https://github.com/tectonic-typesetting/tectonic/discussions/1186). The source archive is checked by extracting it and compiling independently; references and the contents page are resolved in the delivered PDF.
 
-After compiling, run `python package_paper.py` from the repository root to create both archives. `latex-source.zip` contains the LaTeX dependencies plus aggregate data and protocol records for review. `arxiv-source.zip` contains only the main TeX source, referenced tables and figures, bibliography source and compiled `.bbl`. It excludes the output PDF, logs, raw prices and unused figures, following the [arXiv TeX preparation guidance](https://info.arxiv.org/help/submit_tex.html). The archive has been built locally; no arXiv upload or server-side compilation has been performed.
+After compiling, run `python package_paper.py` from the repository root to create both archives. `latex-source.zip` contains the LaTeX dependencies plus aggregate data and protocol records. `arxiv-source.zip` contains only the main TeX source, referenced tables and figures, bibliography source and compiled `.bbl`. It excludes the output PDF, logs, raw prices and unused figures, following the [arXiv TeX preparation guidance](https://info.arxiv.org/help/submit_tex.html). The archive has been built locally; no arXiv upload or server-side compilation has been performed.
 
 ## Reproduce numerical assets
 
@@ -46,13 +46,13 @@ After all numerical exporters, run `python render_submission_assets.py` before b
 - `prediction_figures_manifest.json`: compatible subset manifest for the six prediction figures.
 - `diagnostics_*`: recorded diagnostic rules, a CSV-tolerance amendment, summary and DM, calibration and win-count records.
 
-## What the paper supports
+## Results and interpretation
 
 In the US development study, the first fractional model has lower pooled QLIKE than tuned EWMA in all six panel–horizon comparisons, but loses to GARCH. The persistent asymmetric refinement improves on that fractional model in all six comparisons and on GARCH at one and five sessions in both panels. GJR-GARCH remains stronger in all six cases. Nominal ranges against GARCH include zero. Those years were available during earlier project iterations; these are retrospective exploratory results.
 
 The later fixed 50:50 fractional/GJR ensemble improves on the standalone refined model and FIGARCH in all nine pooled comparisons across the US index, US sectors and eight international ETFs. It beats GJR in three; all nine nominal 95% paired intervals include zero at both block lengths. This establishes neither superiority nor equivalence to GJR. The external panel does not confirm a benefit from graph diffusion. Annual, per-asset and secondary-score exceptions are retained in the [external study](../docs/external_validation.md).
 
-The mathematical reformulation and reproducible benchmark provide a structured assessment of the model. The model is a restricted multivariate ARCH specification; the [related-work comparison](../docs/related_work.md) explains its relationship to FIGARCH, spatial ARCH, network log-ARCH, network GARCH and threshold network GARCH. It does not establish novelty priority, editorial acceptance, universal predictive superiority or trading profitability.
+The model restricts multivariate ARCH lag matrices to a shared graph resolvent and fractional temporal profile. The [literature comparison](../docs/related_work.md) explains the relation to FIGARCH, spatial ARCH, network log-ARCH and network GARCH. Its fixed-parameter moment results and its empirical accuracy are assessed separately.
 
 ## Reproduce the external study
 

@@ -1,14 +1,14 @@
 # ETF simulation with temporal memory
 
-This project studies how fractional memory and interactions between sectors can model fluctuations in the S&P 500 and eleven sector ETFs. It includes stochastic return simulations, price-forecast experiments and a conditional-variance model for forecasting risk.
+A conditional-variance model for the S&P 500, eleven sector ETFs and eight country ETFs, combining fractional memory with diffusion on a correlation graph. The repository contains the model, rolling forecast experiments, mathematical derivations and the manuscript.
 
-The variance model combines **positive fractional-memory weights and diffusion on a sector-correlation graph**, with a persistent variance state and asymmetric responses to negative returns. Its equations, mathematical properties and chronological evaluation are developed in the [research manuscript](paper/main.pdf). The [LaTeX package](paper/latex-source.zip) includes the manuscript, figures, tables and bibliography. The [refined model explanation](docs/refinement.md) connects the equations to the implementation and the earlier specification.
+The model uses positive fractional weights, a persistent variance state and a larger response to negative returns. The [manuscript](paper/main.pdf) derives its moment properties and forecasts; the [model specification](docs/refinement.md) connects the equations to the implementation. Download the [LaTeX package](paper/latex-source.zip) for the manuscript, figures, tables and bibliography.
 
-An [external-universe experiment](docs/external_validation.md) retains that model unchanged, evaluates eight international ETFs, and adds FIGARCH plus an optional **fixed 50:50 fractional/GJR forecast ensemble**. Its rules were recorded before the new download. The [related-work comparison](docs/related_work.md) explains the contribution relative to existing network volatility models. A separate [arXiv source archive](paper/arxiv-source.zip) contains the manuscript dependencies for compilation.
+Benchmarks include EWMA, GARCH, GJR-GARCH, FIGARCH and Network GARCH. The [country-ETF experiment](docs/external_validation.md) evaluates transfer beyond the US sector panel and a **fixed 50:50 fractional/GJR ensemble**. The [literature comparison](docs/related_work.md) sets out the model’s relation to existing network volatility specifications. A compact [arXiv source archive](paper/arxiv-source.zip) is also available.
 
-A subsequent [Network GARCH comparison](docs/network_benchmark.md) adds weighted and binary network benchmarks and a pooled no-network control on the same recorded targets. The standalone fractional model performs better than the weighted network on country ETFs and worse on sectors; paired ranges include zero.
+The [Network GARCH experiment](docs/network_benchmark.md) compares weighted and binary graphs with a pooled control. The fractional model has lower average loss on country ETFs and higher loss on sectors than the weighted network; paired intervals include zero.
 
-The [prediction figure guide](docs/prediction_figures.md) compares observed risk evolution with the recorded model forecasts at several horizons and for every ETF. It also explains Figure 2, where EWMA and all other methods have visible, directly labeled QLIKE scores.
+The [figure guide](docs/prediction_figures.md) explains the observed and forecast volatility paths, units, logarithmic scales and cross-asset dispersion bands.
 
 ![Volatility-forecast losses across the index, sectors and international ETFs](paper/figures/external_comparison.png)
 
@@ -26,7 +26,7 @@ python run_refinement.py --synthetic --output artifacts/refinement-synthetic
 python -m unittest discover -s tests -v
 ```
 
-The example runs offline after installation, using 1,300 explicitly synthetic prices. It saves forecasts, aggregate and annual metrics, paired comparisons, fitting audits and figures. Synthetic execution checks the workflow; it is not evidence of market performance.
+The offline example uses 1,300 synthetic prices and saves forecasts, metrics, paired comparisons, fitting records and figures. Market results require the data described below.
 
 To reproduce the market study with the documented local snapshot:
 
@@ -55,9 +55,9 @@ Lower QLIKE means a better variance forecast on the common targets. Pooled score
 
 The fixed ensemble improves on the standalone fractional model and FIGARCH in all nine pooled comparisons. It beats GJR-GARCH in three, with small margins; all nine nominal 95% paired intervals against GJR include zero at both block lengths (five and ten origins). This establishes neither superiority nor equivalence to GJR. The international panel does not confirm a benefit from graph diffusion. The [complete external results](docs/external_validation.md) retain annual deterioration, per-asset exceptions and ablations. All 760 FIGARCH fits converged.
 
-The earlier refinement itself improved the initial fractional specification in all six US comparisons and GARCH in four; GJR-GARCH remained stronger in all six. Those [earlier results](docs/refinement.md) and their [paired comparisons](paper/refinement_comparisons.csv) remain available. Neither successive gains nor external-universe extension establish directional price accuracy or trading profitability.
+The earlier refinement itself improved the initial fractional specification in all six US comparisons and GARCH in four; GJR-GARCH remained stronger in all six. The [refinement results](docs/refinement.md) and [paired comparisons](paper/refinement_comparisons.csv) compare the persistent asymmetric model with its ablations.
 
-The model has an explicit positive variance floor, a graph operator that preserves constants and contracts graph energy, and fixed-parameter stationarity and moment properties under stated assumptions. Its multi-step marginal variance forecasts are computed without Monte Carlo error. These mathematical properties do not guarantee predictive superiority, directional price accuracy or trading profitability.
+The model has an explicit positive variance floor, a graph operator that preserves constants and contracts graph energy, and fixed-parameter stationarity and moment properties under stated assumptions. Its multi-step marginal variance forecasts are computed without Monte Carlo error. The empirical comparisons assess whether those restrictions help on the observed data.
 
 The [forecast diagnostics](docs/forecast_diagnostics.md) report paired Diebold–Mariano tests, Mincer–Zarnowitz calibration regressions and per-asset win counts from the saved predictions. No loss comparison against GJR rejects at 5%. One-session country-panel calibration rejects for all three models at both HAC lag choices, including after multiplicity adjustment.
 
@@ -80,9 +80,9 @@ The [adaptive specification](docs/adaptive_forecasting.md) explains the regulari
 
 Features, graph estimates, scaling, fitting and selection use only rows dated through each forecast origin in the recorded snapshot. The US historical periods were inspected during development. The international universe was fixed before its first download, but shares global shocks with the US assets and remains retrospective. Neither experiment is a prospective test. Daily squared-return targets are noisy volatility proxies. The [data-vintage discussion](docs/data.md#data-vintages-and-forecast-availability) explains which price revisions can change returns and what a prospective record would need to preserve.
 
-The **66 passing tests** cover future-price perturbations, training-label boundaries, conditional moments, interval scoring, alignment, reproducibility and portfolio aggregation. The variance tests check fractional kernels, graph positivity, energy contraction, asset relabeling, GARCH/GJR filtering, asymmetric normalization, validation alignment and simulated moments. The new checks cover FIGARCH library equivalence on strided panel inputs, correct ensemble scoring and the effective-memory impulse response. Eight additional Network GARCH tests check gradients, conditional forecasts, estimation constraints, asset relabeling and future-price independence. Five diagnostic tests check HAC calculations, calibration regressions, multiplicity adjustment, paired alignment and degenerate inputs.
+The **66 passing tests** cover numerical recursions, conditional moments, graph properties, estimation gradients, forecast alignment and independence from future prices. They also check FIGARCH library agreement, ensemble scoring, HAC inference, calibration regressions and multiplicity adjustment. See the [verification guide](docs/verification.md) for the document and reproduction checks.
 
-The standalone implementation is [refined_fractional.py](refined_fractional.py), with its experiment in [run_refinement.py](run_refinement.py). [external_validation.py](external_validation.py) and [run_external.py](run_external.py) add the frozen-universe comparison. The first variance specification remains in [fractional_diffusion.py](fractional_diffusion.py), reproduced by [run_paper.py](run_paper.py). The earlier return core is [temporal_memory.py](temporal_memory.py); [forecasting.py](forecasting.py) and [adaptive_forecasting.py](adaptive_forecasting.py) contain its separate forecast layers. The [scientific review](docs/scientific_review.md) explains why the original fractional-PDE derivation did not justify that return recurrence. The variance specifications have their own explicit assumptions and proofs.
+The standalone implementation is [refined_fractional.py](refined_fractional.py), with its experiment in [run_refinement.py](run_refinement.py). [external_validation.py](external_validation.py) and [run_external.py](run_external.py) add the frozen-universe comparison. The first variance specification remains in [fractional_diffusion.py](fractional_diffusion.py), reproduced by [run_paper.py](run_paper.py). The earlier return core is [temporal_memory.py](temporal_memory.py); [forecasting.py](forecasting.py) and [adaptive_forecasting.py](adaptive_forecasting.py) contain its separate forecast layers. The [original-model notes](docs/legacy_model_notes.md) explain why the original fractional-PDE derivation did not justify that return recurrence. The variance specifications have separate assumptions and proofs.
 
 **Enia Ardid and Pablo Casado de Amezúa.** Citation metadata and distribution details are in [CITATION.cff](CITATION.cff) and the [publication notes](docs/publication.md).
 

@@ -2,9 +2,9 @@
 
 This page specifies the original conditional-forecast and fixed-blend workflow. The later [adaptive extension](adaptive_forecasting.md) reuses these exact conditional moments as features, adds signed regularized calibration and evaluates empirical uncertainty intervals separately.
 
-The forecasting workflow uses the same return recurrence as the original simulation. The weights, Hurst mapping, Gaussian innovations, sector ordering and reflected Laplacian are unchanged. The new code changes the **information supplied to the recurrence and the forecast calibration**: it starts from observed history, anchors prices at the forecast origin and chooses calibration on internal validation dates.
+The forecasting workflow uses the same return recurrence as the original simulation. The weights, Hurst mapping, Gaussian innovations, sector ordering and reflected Laplacian are unchanged. The forecasting layer changes the **conditioning information and calibration**: it starts from observed history, anchors prices at the forecast origin and chooses calibration on internal validation dates.
 
-`temporal_memory.py` remains unchanged from the 16 October review. `forecasting.py` supplies conditional inference and evaluation; `run_experiment.py --mode simulation` still runs the earlier experiment. The [model specification](methodology.md) describes that core and its interpretation as a discrete heuristic.
+`temporal_memory.py` defines the return recurrence. `forecasting.py` supplies conditional inference and evaluation; `run_experiment.py --mode simulation` still runs the earlier experiment. The [model specification](methodology.md) describes that core and its interpretation as a discrete heuristic.
 
 ## Prices, returns and information
 
@@ -59,7 +59,7 @@ $$
 s=\begin{cases}1,&\text{index},\\0.6,&\text{sectors}.\end{cases}
 $$
 
-This Hurst mapping is a modeling assumption. The recurrence is not obtained by isolating a Grünwald–Letnikov derivative; the [scientific review](scientific_review.md) explains the distinction. Forecasting improvements do not repair that continuous-time derivation.
+This Hurst mapping is a modeling assumption. The recurrence is not obtained by isolating a Grünwald–Letnikov derivative; the [original-model notes](legacy_model_notes.md) explain the distinction. The forecasts are derived from the discrete recurrence.
 
 ## Exact conditional means, without Monte Carlo noise
 
