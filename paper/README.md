@@ -1,6 +1,6 @@
 # Research manuscript
 
-`main.tex` contains the manuscript and `main.pdf` the compiled document. The source uses A4 pages, 12-point Latin Modern type and numbered equations. Figures and tables are generated from saved experimental records. `latex-source.zip` contains the sources and dependencies for a conventional LaTeX installation or Overleaf.
+`main.tex` contains the manuscript and `main.pdf` the compiled document. The 35-page manuscript uses A4 pages, 12-point Latin Modern type and numbered equations, with the title and abstract on the opening text page. Figures and tables are generated from saved experimental records. `latex-source.zip` contains the sources and dependencies for a conventional LaTeX installation or Overleaf.
 
 The model combines **fractional memory and graph diffusion in conditional variance**. The manuscript proves positivity, graph contraction and fixed-parameter moment stability, and derives the effective kernel of the [persistent asymmetric specification](../docs/refinement.md). Experiments cover the initial model, its refinements, [country ETFs](../docs/external_validation.md), forecast combinations and network benchmarks.
 
@@ -15,7 +15,7 @@ tectonic --reruns 3 main.tex
 
 A conventional alternative is `latexmk -pdf main.tex`. The packages are standard LaTeX; BibTeX uses `references.bib`. The documented build uses Tectonic 0.15.0. Its first run may download fonts and packages.
 
-The fixed pass count avoids a [known bibliography rerun-detection issue in Tectonic 0.15](https://github.com/tectonic-typesetting/tectonic/discussions/1186). The source archive is checked by extracting it and compiling independently; references and the contents page are resolved in the delivered PDF.
+The fixed pass count avoids a [known bibliography rerun-detection issue in Tectonic 0.15](https://github.com/tectonic-typesetting/tectonic/discussions/1186). The source archive is checked by extracting it and compiling independently; citations and cross-references are resolved in the delivered PDF.
 
 After compiling, run `python package_paper.py` from the repository root to create both archives. `latex-source.zip` contains the LaTeX dependencies plus aggregate data and protocol records. `arxiv-source.zip` contains only the main TeX source, referenced tables and figures, bibliography source and compiled `.bbl`. It excludes the output PDF, logs, raw prices and unused figures, following the [arXiv TeX preparation guidance](https://info.arxiv.org/help/submit_tex.html). The archive has been built locally; no arXiv upload or server-side compilation has been performed.
 
