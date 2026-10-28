@@ -59,7 +59,7 @@ Changed returns can affect the fitting means and scales, estimated graph, select
 
 ### Requirements for a prospective extension
 
-This is a description of a future study, not a registered protocol or an active collection service.
+The following requirements are implemented in the separate [frozen forward evaluation](prospective_evaluation.md). Its public protocol precedes future targets; local timestamps alone are not independent preregistration. Collection and completion status are distinct from the historical results.
 
 1. Fix the code version, assets, horizons, refit and validation rules, score, collection period and reporting date before observing the new targets. Keep the existing studies intact.
 2. At each scheduled origin, save the complete received price vintage, request and reception times, adjustment convention, corporate-action records where available, and hashes. Archive the fitted state and all benchmark forecasts before the first target session, with an externally verifiable timestamp.

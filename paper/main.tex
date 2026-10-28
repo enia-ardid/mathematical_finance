@@ -135,6 +135,10 @@ We specify a positive fractional--diffusive variance family, establish its
 fixed-parameter moment properties and derive its effective memory and exact
 multi-step forecasts. We assess its restrictions through ablations, conventional
 and network benchmarks, forecast combination and calibration diagnostics.
+A fixed-graph bias--variance calculation identifies when diffusion reduces
+signal-estimation error (Appendix~\ref{app:diffusion-risk}); a separate forward
+protocol tests the mechanism on future range-based targets
+(Appendix~\ref{app:forward}).
 The implementation and reproduction instructions are given in Appendix~A.
 Exact numerical reproduction requires the retained price snapshots.
 
@@ -959,8 +963,8 @@ and timestamped forecasts before the first target session. A predefined
 rule would also fix when target returns are first recorded and how later
 corrections are reported. Missing releases, failed forecasts and any
 amendment would remain in the audit trail. Reporting would occur after a
-fixed collection period, regardless of the observed ranking. No such
-prospective run is included in the present results.
+fixed collection period, regardless of the observed ranking. Appendix~\ref{app:forward} specifies a separate implementation of this design.
+No completed prospective run is included in the present results.
 
 \subsection{Scope and reproducibility}
 The positive variance floor and graph contraction constrain the recursion,
@@ -1198,6 +1202,177 @@ panel and horizon. Denominators are one index, eleven sectors and eight
 country ETFs. The complete universe is retained in each comparison.}
 \label{fig:asset-wins}
 \end{figure}
+
+\clearpage
+\section{When diffusion reduces estimation error}
+\label{app:diffusion-risk}
+The graph can suppress measurement noise while also erasing genuine differences
+between assets. The following calculation separates these effects. It concerns
+squared-error estimation of a latent signal with a fixed graph; it is not a
+claim that the fitted forecasting procedure improves QLIKE. Finite measurement-noise
+covariance is an additional assumption: second moments of returns alone
+do not ensure finite variance of squared-return measurements.
+
+Condition on information $\mathcal G$ under which a symmetric graph Laplacian
+$L$, a signal $m\in\R^J$ and a finite noise covariance $\Sigma$ are fixed. Suppose
+$x=m+\varepsilon$, with $\E[\varepsilon\mid\mathcal G]=0$ and
+$\E[\varepsilon\varepsilon^\top\mid\mathcal G]=\Sigma$. Write
+$A_\tau=(I+\tau L)^{-1}$ and
+$R_\tau=\E[\|A_\tau x-m\|_2^2\mid\mathcal G]$.
+
+\begin{proposition}[Bias and noise reduction under a fixed graph]
+\label{prop:diffusion-risk}
+For $\tau\geq0$,
+\begin{align}
+R_\tau&=\|(A_\tau-I)m\|_2^2+
+            \operatorname{tr}(A_\tau\Sigma A_\tau),\\
+R_\tau-R_0&=\|(A_\tau-I)m\|_2^2-
+            \operatorname{tr}\{(I-A_\tau^2)\Sigma\}.
+\label{eq:diffusion-risk}
+\end{align}
+Consequently, diffusion improves total squared-error risk precisely when its
+squared bias is smaller than its reduction of noise variance.
+\end{proposition}
+\begin{proof}
+Expand $A_\tau x-m=(A_\tau-I)m+A_\tau\varepsilon$. The conditional cross term
+vanishes. The noise term is $\operatorname{tr}(A_\tau\Sigma A_\tau)$ by symmetry
+of $A_\tau$. Subtract $R_0=\operatorname{tr}(\Sigma)$ and use cyclicity of trace.
+The spectrum of $A_\tau$ lies in $(0,1]$, so the noise reduction is nonnegative.
+\end{proof}
+
+Let $Lv_k=\lambda_kv_k$, with orthonormal $v_k$, and define
+$\theta_k=v_k^\top m$, $\nu_k=v_k^\top\Sigma v_k$ and
+$a_k=(1+\tau\lambda_k)^{-1}$. The same difference is
+\begin{equation}
+R_\tau-R_0=\sum_{k=1}^J\left\{
+ (1-a_k)^2\theta_k^2-(1-a_k^2)\nu_k\right\}.
+\label{eq:spectral-risk}
+\end{equation}
+This identity does not require $L$ and $\Sigma$ to commute. Modes with
+$\lambda_k=0$ are unchanged. For $\tau\lambda_k>0$, smoothing improves the
+individual mode precisely when
+\[
+\theta_k^2<\left(1+\frac{2}{\tau\lambda_k}\right)\nu_k.
+\]
+The sum in \eqref{eq:spectral-risk}, rather than improvement of every mode,
+is the necessary and sufficient aggregate condition. At zero strength,
+$R'_0=-2\operatorname{tr}(L\Sigma)$: sufficiently small positive diffusion
+helps if this trace is positive. At large strength, the estimator approaches
+projection onto the graph nullspace and may retain substantial bias.
+
+For a fixed intercept and previous state, the one-step forcing
+$c\one+b h+aA_\tau x$ estimates $c\one+b h+am$ with risk $a^2R_\tau$.
+The statement does not compare recursively refitted processes with different
+past states. Nor does it automatically apply when $L$ is estimated from the
+same noisy observations: conditioning on that graph need not preserve
+zero-mean noise. A graph estimated on an earlier block or an explicitly
+specified conditional noise model would be needed for that interpretation.
+If the target itself contains noise correlated with $\varepsilon$, the
+forecast-risk comparison has an additional covariance term. These restrictions
+separate the mechanism calculation from an empirical performance guarantee.
+
+Figure~\ref{fig:diffusion-risk} checks the identity in a positive-signal
+experiment. An eight-node cycle has edge weights $1/2$, with
+$m_j=1+q(-1)^j$ and independent measurements
+$x_j=m_j\chi^2_{24}/24$. Hence $\Sigma=\diag(2m_j^2/24)$.
+The two fixed amplitudes $q=0.05$ and $q=0.8$ represent similar and
+heterogeneous signals. At $\tau=1$, exact total risk changes from $0.668333$
+to $0.266239$ in the first case and from $1.093333$ to $2.696557$ in the
+second. The calculation uses 40,000 draws with seed 20261026 and common random
+numbers across strengths. All plotted risk differences agree with their
+analytic values within six Monte Carlo standard errors. These are synthetic
+estimation results, not new market forecast scores.
+
+\begin{figure}[tbp]
+\centering\includegraphics[width=\textwidth]{figures/diffusion_risk.pdf}
+\caption{Bias and noise reduction under fixed graph smoothing. Negative total
+risk differences favor diffusion. Black markers show Monte Carlo differences
+and 1.96-standard-error bars; the other curves are analytic. Strong smoothing
+helps similar signals but harms sufficiently heterogeneous ones.}
+\label{fig:diffusion-risk}
+\end{figure}
+
+\clearpage
+\section{Frozen forward evaluation}
+\label{app:forward}
+A separate protocol fixes future evaluation rules before its first target
+window. It retains the model and selection grids in the main study and adds
+an OHLC-based measurement of volatility. No completed forward evaluation is
+reported here. The public protocol, code hashes and calendar are supplied as
+\texttt{prospective\_protocol.json}; collection records are kept separately
+from all historical experiments.
+
+\paragraph{Forecasts and comparisons.}
+The scheduled design uses 52 origins five exchange sessions apart, beginning
+on 27 October 2026, and 25-session refits. One panel retains the eleven sector
+ETFs; a second comprises AGG, IEF, TLT, TIP, GLD, SLV, DBC and VNQ, extending
+the asset mix to bonds, metals, commodities and real estate. Universe membership
+reflects asset classes rather than measured forecasting gains. These panels
+remain exposed to common market shocks.
+
+The fractional model, kernel grids, 252-observation validation, 1008-observation
+estimation window and mean/scale conventions are unchanged. Freezing refers to
+the specification and update rules; fitted coefficients may change at the
+scheduled refits. In addition to the selected model and conventional references,
+matched counterfactuals set only diffusion to $0$, $0.25$, $1$ or $4$, retaining
+the selected kernel, feedback, persistence, asymmetry, mean and scale. This
+isolates the effect of diffusion from reselection of other parameters.
+
+An evening forecast must be archived by 23:59:59 New York time at the origin.
+Because an overnight return starts at the preceding close, the design excludes
+the immediately following session from the target: an $h$-session forecast is
+$\sum_{k=2}^{h+1}\widehat v_{o+k\mid o}$ for $h\in\{1,5,21\}$.
+The first target interval therefore starts at the next session's close,
+after issuance. This one-session embargo is explicit; these scores must not be
+pooled with the historical study's immediate-next-session targets.
+
+\paragraph{Volatility measurements.}
+For consistently adjusted daily open, high, low and close prices
+$(O_t,H_t,L_t,C_t)$, define
+\begin{align}
+g_t&=\log(O_t/C_{t-1}),\\
+\operatorname{RS}_t&=
+ \log(H_t/O_t)\log(H_t/C_t)+
+ \log(L_t/O_t)\log(L_t/C_t),\\
+Y^{\mathrm{range}}_{o,h,j}&=
+ \sum_{k=2}^{h+1}\left\{
+ (g_{o+k,j}-\widehat\mu^{\mathrm{gap}}_{o,j})^2+
+ \operatorname{RS}_{o+k,j}\right\}.
+\end{align}
+The gap mean is estimated on the common trailing estimation window at refit
+and then held fixed. The Rogers--Satchell term estimates intraday variance
+under a log-Brownian model with drift \citep{rogers1991}; observed discrete
+extrema and departures from that model can introduce measurement error.
+The sum with the centered overnight square estimates whole-day variance only
+with suitable conditional centering and no material overnight/intraday
+covariance. It is not high-frequency realized variance and is not asserted
+to be a universally unbiased proxy for the existing model. The centered
+close-to-close squared-return target remains a prespecified sensitivity
+measure, using exactly the same forecasts and dates. Neither OHLC target
+is used to tune the model on the forward evaluation.
+
+\paragraph{Data capture and inference.}
+The first complete same-session snapshot received between 17:00 and 23:59:59
+New York time is retained with raw prices, adjustment factors recoverable from
+raw and adjusted closes, request/reception times and hashes. Later corrections
+do not replace the first capture. Missing sessions never shorten a horizon;
+failed fits, late forecasts and absent snapshots remain in the coverage record.
+A missed scheduled refit invalidates its dependent origins until the next
+scheduled refit. No automatic substitute model is used.
+
+Two primary contrasts are fixed in each panel: matched $\tau=1$ versus
+$\tau=0$ on the five-session range target, and selected fractional versus
+GJR on the 21-session range target. The four primary tests use two-sided
+DM statistics with Bartlett HAC lag four and Holm adjustment at 5\%; lag
+nine is a fixed sensitivity. Formal primary tests require all 52 scheduled
+matched origins, preventing compressed time gaps from entering the HAC
+calculation. Incomplete coverage produces descriptive scores and an
+inconclusive primary test. Complete coverage does not itself establish
+adequate power. Other strengths, horizons and the close-based target are
+secondary analyses. Reporting follows the fixed last target, without interim
+performance rankings or outcome-dependent stopping. Local timestamps and
+hashes support an audit but do not by themselves constitute independent
+preregistration or external proof of forecast publication time.
 
 \clearpage
 \section*{Data and code availability}

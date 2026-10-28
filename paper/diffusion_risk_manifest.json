@@ -1,0 +1,23 @@
+{
+  "kind": "synthetic mechanism experiment, not empirical forecast evidence",
+  "seed": 20261026,
+  "draws": 40000,
+  "assets": 8,
+  "chi_square_degrees": 24,
+  "amplitudes": [
+    0.05,
+    0.8
+  ],
+  "graph": "cycle with each edge weight 0.5",
+  "noise": "independent positive chi-square measurements, variance 2*m_j^2/24",
+  "code_sha256": {
+    "diffusion_risk.py": "0619dbcb13e4c0da6f97d7ee6984775645b760de206ded3d87baf7c5530bbf44",
+    "run_diffusion_risk.py": "5996cdac093a2f1cb827cafb02645e7128a82fb60c2884819f054a27168c2315",
+    "fractional_diffusion.py": "870415b201b7f4a60a153c5ae278d42496300c7ea502fd370b71b00e9f665ae1"
+  },
+  "outputs_sha256": {
+    "diffusion_risk.csv": "1049f979c44e31f849ac9757ede77b2cf175c4af7e021087d9ab2190ad39ecfe",
+    "diffusion_risk.pdf": "b687b9254267385a006c86aeb3eeb245b2c15ac20db4d7c501a4224a721918f3",
+    "diffusion_risk.png": "15a4a40ff4baca9befd1ad4e5816f136eb5bce070e041294635b7096c42b4ad2"
+  }
+}

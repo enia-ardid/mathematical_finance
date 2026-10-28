@@ -89,3 +89,9 @@ The standalone implementation is [refined_fractional.py](refined_fractional.py),
 ## Citation and reuse
 
 Please cite this project using [CITATION.cff](CITATION.cff) and identify the Git commit used. The manuscript has not been submitted to arXiv. No reuse license has been selected; see the [publication notes](docs/publication.md).
+
+## Forward evaluation and diffusion risk
+
+A [fixed-graph risk calculation](docs/diffusion_risk.md) separates noise reduction from the bias of smoothing genuinely different asset signals. Its reproducible positive-signal simulation includes both beneficial and harmful diffusion. These are mechanism results, not new market forecast scores.
+
+The [frozen forward protocol](docs/prospective_evaluation.md) schedules new observations from October 27, 2026, with range-based volatility measurements, matched diffusion comparisons and a one-session target embargo. Model rules and code hashes are fixed before the future targets. No prospective accuracy result is available at launch.

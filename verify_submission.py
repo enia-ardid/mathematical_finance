@@ -175,7 +175,24 @@ def main():
         for link in re.findall(r'\]\(([^)\s]+)\)',path.read_text()):
             if '://' not in link and not link.startswith('#'):
                 assert (path.parent / unquote(link.split('#')[0])).exists(), (path,link)
-    report = dict(figure_files=22, table_fragments=10, verified_score_cells=score_cells,
+    mechanism = json.loads(Path('paper/diffusion_risk_manifest.json').read_text())
+    check_hashes(mechanism['code_sha256'])
+    for name, expected in mechanism['outputs_sha256'].items():
+        path = Path('paper/figures' if name.endswith(('.pdf','.png')) else 'paper') / name
+        assert sha(path) == expected, path
+    risk = pd.read_csv('paper/diffusion_risk.csv')
+    assert len(risk) == 82
+    assert (abs(risk.mc_difference - risk.risk_difference) <= 6*risk.mc_standard_error + 1e-12).all()
+    for scenario in ['smooth','heterogeneous']:
+        row = risk[(risk.scenario == scenario) & (risk.strength == 1)].iloc[0]
+        assert f'{row.baseline_risk:.6f}' in tex and f'{row.risk:.6f}' in tex
+    prospective = json.loads(Path('paper/prospective_protocol.json').read_text())
+    check_hashes(prospective['code_sha256'])
+    assert len(prospective['origin_dates']) == 52 and prospective['lead_sessions'] == 1
+    assert prospective['origin_dates'][0] == '2026-10-27'
+    assert prospective['sessions'][-1]['date'] == '2027-12-03'
+    report = dict(figure_files=24, table_fragments=10, verified_score_cells=score_cells,
+                  mechanism_rows=len(risk), prospective_protocol_frozen=True,
                   references=len(cited), diagnostics=dict(dm_rows=len(dm),mz_rows=len(mz),asset_win_rows=len(wins)),
                   paired_GJR_intervals_containing_zero=len(intervals),
                   figures_and_tables_reproduced=bool(args.regenerated),
